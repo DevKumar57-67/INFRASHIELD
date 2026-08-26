@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login — Infra Shield</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050505;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand-name {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand-name span {
+            color: #4da3ff;
+        }
+
+        .card {
+            background: #0d0d0d;
+            border: 1px solid #242424;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            font-size: 32px;
+            letter-spacing: -1.5px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            color: #aaa;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            background: #151515;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #4da3ff;
+            box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: white;
+            color: black;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .btn:hover {
+            background: #4da3ff;
+            color: white;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+            color: #555;
+            font-size: 12px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: "";
+            height: 1px;
+            background: #292929;
+            flex: 1;
+        }
+
+        .github-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: 1px solid #303030;
+            background: #121212;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .github-btn:hover {
+            background: #1b1b1b;
+            border-color: #555;
+        }
+
+        .bottom-text {
+            text-align: center;
+            margin-top: 25px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .bottom-text a {
+            color: #4da3ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="brand">
+        <div class="brand-name">
+            INFRA<span>SHIELD</span>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <h1>Welcome back.</h1>
+
+        <p class="subtitle">
+            Sign in to access your infrastructure intelligence
+            dashboard.
+        </p>
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <label>EMAIL ADDRESS</label>
+
+            <input
+                type="email"
+                name="email"
+                placeholder="you@example.com"
+                required
+            >
+
+            <button class="btn" type="submit">
+                Continue with Email →
+            </button>
+
+        </form>
+
+        <div class="divider">
+            OR
+        </div>
+
+        <button class="github-btn">
+            Continue with GitHub
+        </button>
+
+        <div class="bottom-text">
+            Don't have an account?
+            <a href="{% url 'signup' %}">Create one</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

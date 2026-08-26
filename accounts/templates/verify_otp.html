@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify Email — Infra Shield</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 25px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        /* BRAND */
+
+        .brand {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #4da3ff;
+        }
+
+        /* CARD */
+
+        .card {
+            background: #0d0d0d;
+            border: 1px solid #242424;
+
+            border-radius: 20px;
+
+            padding: 40px;
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        /* ICON */
+
+        .icon {
+            width: 55px;
+            height: 55px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            border-radius: 14px;
+
+            background: #151515;
+            border: 1px solid #292929;
+
+            font-size: 24px;
+
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 32px;
+            letter-spacing: -1.5px;
+
+            margin-bottom: 12px;
+        }
+
+        .subtitle {
+            color: #888;
+
+            line-height: 1.6;
+
+            font-size: 14px;
+
+            margin-bottom: 30px;
+        }
+
+        .email {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* OTP INPUT */
+
+        .otp-input {
+            width: 100%;
+
+            padding: 17px;
+
+            background: #151515;
+
+            border: 1px solid #2a2a2a;
+
+            border-radius: 10px;
+
+            color: white;
+
+            font-size: 24px;
+
+            letter-spacing: 10px;
+
+            text-align: center;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .otp-input:focus {
+            border-color: #4da3ff;
+
+            box-shadow:
+                0 0 0 3px rgba(77, 163, 255, 0.1);
+        }
+
+        /* BUTTON */
+
+        .verify-btn {
+            width: 100%;
+
+            margin-top: 18px;
+
+            padding: 15px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: white;
+
+            color: black;
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .verify-btn:hover {
+            background: #4da3ff;
+            color: white;
+        }
+
+        /* MESSAGES */
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background: #171717;
+
+            border: 1px solid #292929;
+
+            color: #ddd;
+
+            font-size: 13px;
+        }
+
+        /* RESEND */
+
+        .resend-section {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #666;
+
+            font-size: 13px;
+        }
+
+        .resend-btn {
+            background: none;
+
+            border: none;
+
+            color: #4da3ff;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            margin-top: 8px;
+        }
+
+        /* BACK */
+
+        .back {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #777;
+
+            text-decoration: none;
+
+            font-size: 13px;
+        }
+
+        .back:hover {
+            color: white;
+        }
+
+        @media (max-width: 500px) {
+
+            .card {
+                padding: 30px 22px;
+            }
+
+            h1 {
+                font-size: 27px;
+            }
+
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- BRAND -->
+
+    <div class="brand">
+
+        <div class="logo">
+            INFRA<span>SHIELD</span>
+        </div>
+
+    </div>
+
+
+    <!-- CARD -->
+
+    <div class="card">
+
+        <div class="icon">
+            ✉
+        </div>
+
+
+        <h1>
+            Verify your email.
+        </h1>
+
+
+        <p class="subtitle">
+
+            We've sent a 6-digit verification code to
+
+            <span class="email">
+                {{ email }}
+            </span>
+
+            .
+
+            Enter the code below to continue.
+
+        </p>
+
+
+        <!-- DJANGO MESSAGES -->
+
+        {% if messages %}
+
+            <div class="messages">
+
+                {% for message in messages %}
+
+                    <div class="message">
+                        {{ message }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+
+        <!-- OTP FORM -->
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            <input
+                type="text"
+                name="otp"
+                class="otp-input"
+                placeholder="000000"
+                maxlength="6"
+                minlength="6"
+                pattern="[0-9]{6}"
+                inputmode="numeric"
+                autocomplete="one-time-code"
+                required
+            >
+
+
+            <button
+                type="submit"
+                class="verify-btn"
+            >
+                Verify & Continue →
+            </button>
+
+        </form>
+
+
+        <!-- RESEND -->
+
+        <div class="resend-section">
+
+            Didn't receive the code?
+
+            <br>
+
+            <form method="POST" action="{% url 'resend_otp' %}">
+                {% csrf_token %}
+                <button type="submit" class="resend-btn">
+                    Resend OTP
+                </button>
+            </form>
+
+        </div>
+
+
+        <a
+            href="{% url 'signup' %}"
+            class="back"
+        >
+            ← Back to sign up
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

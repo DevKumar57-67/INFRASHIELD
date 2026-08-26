@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up — Infra Shield</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .brand {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .brand-name {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand-name span {
+            color: #4da3ff;
+        }
+
+        .card {
+            background: #0d0d0d;
+            border: 1px solid #242424;
+            border-radius: 20px;
+            padding: 38px;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .card h1 {
+            font-size: 32px;
+            letter-spacing: -1.5px;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #888;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #bbb;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 15px;
+            background: #151515;
+            border: 1px solid #2a2a2a;
+            border-radius: 10px;
+            color: white;
+            font-size: 15px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #4da3ff;
+            box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            margin-top: 10px;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            background: #ffffff;
+            color: #000000;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #4da3ff;
+            color: white;
+        }
+
+        .bottom-text {
+            text-align: center;
+            margin-top: 25px;
+            color: #777;
+            font-size: 14px;
+        }
+
+        .bottom-text a {
+            color: #4da3ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .messages {
+            margin-bottom: 20px;
+        }
+
+        .message {
+            background: #171717;
+            border: 1px solid #292929;
+            padding: 12px;
+            border-radius: 8px;
+            color: #ddd;
+            font-size: 13px;
+        }
+
+        @media (max-width: 500px) {
+            .card {
+                padding: 28px 22px;
+            }
+
+            .card h1 {
+                font-size: 27px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="brand">
+        <div class="brand-name">
+            INFRA<span>SHIELD</span>
+        </div>
+    </div>
+
+    <div class="card">
+
+        <h1>Create your account.</h1>
+
+        <p class="subtitle">
+            Join Infra Shield and help build a smarter,
+            safer and more resilient infrastructure network.
+        </p>
+
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>FIRST NAME</label>
+                {{ form.first_name }}
+                {{ form.first_name.errors }}
+            </div>
+
+            <div class="form-group">
+                <label>LAST NAME</label>
+                {{ form.last_name }}
+                {{ form.last_name.errors }}
+            </div>
+
+            <div class="form-group">
+                <label>EMAIL ADDRESS</label>
+                {{ form.email }}
+                {{ form.email.errors }}
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Continue with Email →
+            </button>
+
+        </form>
+
+        <div class="bottom-text">
+            Already have an account?
+            <a href="{% url 'login' %}">Log in</a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
