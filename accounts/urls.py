@@ -23,18 +23,6 @@ urlpatterns = [
     ),
 
     path(
-        "verify-otp/",
-        views.verify_otp_view,
-        name="verify_otp"
-    ),
-
-    path(
-        "resend-otp/",
-        views.resend_otp_view,
-        name="resend_otp"
-    ),
-
-    path(
         "dashboard/",
         views.dashboard,
         name="dashboard"

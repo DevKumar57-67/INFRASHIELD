@@ -1,30 +1,2065 @@
-<!DOCTYPE html>
+{% load static %}
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
 
-    <title>Infra Shield Dashboard</title>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard | Infra Shield</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <style>
+
+        /* ==============================
+           GLOBAL
+        ============================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* ==============================
+           APP LAYOUT
+        ============================== */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* ==============================
+           SIDEBAR
+        ============================== */
+
+        .sidebar {
+            width: 250px;
+            background: #090909;
+            border-right: 1px solid #1c1c1c;
+
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 25px 15px;
+
+            z-index: 100;
+        }
+
+
+        /* LOGO */
+
+        .logo {
+            padding: 5px 12px 30px;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #4da3ff;
+        }
+
+
+        /* SIDEBAR SECTION */
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            color: #555;
+
+            padding: 0 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* NAV ITEM */
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 11px 12px;
+
+            margin-bottom: 3px;
+
+            border-radius: 9px;
+
+            color: #858585;
+
+            font-size: 13px;
+            font-weight: 500;
+
+            transition: 0.2s;
+        }
+
+        .nav-item:hover {
+            background: #141414;
+            color: white;
+        }
+
+        .nav-item.active {
+            background: #151515;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 18px;
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+
+        /* SIDEBAR BOTTOM */
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+
+        /* ==============================
+           MAIN AREA
+        ============================== */
+
+        .main {
+            margin-left: 250px;
+
+            width: calc(100% - 250px);
+
+            min-height: 100vh;
+
+            background: #050505;
+        }
+
+
+        /* ==============================
+           TOP NAVBAR
+        ============================== */
+
+        .topbar {
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 32px;
+
+            border-bottom: 1px solid #1b1b1b;
+
+            background: rgba(5, 5, 5, 0.92);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 50;
+        }
+
+
+        /* SEARCH */
+
+        .search-container {
+            width: 420px;
+
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #555;
+
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+
+            background: #101010;
+
+            border: 1px solid #242424;
+
+            border-radius: 9px;
+
+            padding: 12px 15px 12px 40px;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #3a3a3a;
+        }
+
+        .search-input::placeholder {
+            color: #555;
+        }
+
+
+        /* TOP RIGHT */
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 18px;
+        }
+
+        .top-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #101010;
+
+            border: 1px solid #222;
+
+            color: #777;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .top-icon:hover {
+            color: white;
+            border-color: #444;
+        }
+
+
+        /* PROFILE */
+
+        .profile {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            background: #1c1c1c;
+
+            border: 1px solid #333;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .profile-info {
+            line-height: 1.3;
+        }
+
+        .profile-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .profile-role {
+            font-size: 10px;
+            color: #666;
+        }
+
+
+        /* ==============================
+           CONTENT
+        ============================== */
+
+        .content {
+            padding: 35px 32px 50px;
+        }
+
+
+        /* ==============================
+           WELCOME
+        ============================== */
+
+        .welcome {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: flex-end;
+
+            margin-bottom: 30px;
+        }
+
+        .welcome-label {
+            color: #4da3ff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 9px;
+        }
+
+        .welcome h1 {
+            font-size: 32px;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            color: #666;
+
+            font-size: 13px;
+        }
+
+
+        /* DATE */
+
+        .date-box {
+            color: #666;
+
+            font-size: 12px;
+        }
+
+
+        /* ==============================
+           STATISTICS
+        ============================== */
+
+        .stats-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 14px;
+
+            margin-bottom: 22px;
+        }
+
+        .stat-card {
+            background: #0b0b0b;
+
+            border: 1px solid #202020;
+
+            border-radius: 13px;
+
+            padding: 20px;
+
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            border-color: #333;
+            transform: translateY(-2px);
+        }
+
+        .stat-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            margin-bottom: 20px;
+        }
+
+        .stat-label {
+            color: #777;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+        }
+
+        .stat-icon {
+            color: #555;
+
+            font-size: 14px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+
+            font-weight: 700;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 6px;
+        }
+
+        .stat-description {
+            color: #555;
+
+            font-size: 11px;
+        }
+
+        .stat-description strong {
+            color: #777;
+        }
+
+
+        /* ==============================
+           MAIN GRID
+        ============================== */
+
+        .dashboard-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.6fr 1fr;
+
+            gap: 20px;
+
+            margin-bottom: 20px;
+        }
+
+
+        /* ==============================
+           PANEL
+        ============================== */
+
+        .panel {
+            background: #0b0b0b;
+
+            border: 1px solid #202020;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+        }
+
+        .panel-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 18px 20px;
+
+            border-bottom: 1px solid #1c1c1c;
+        }
+
+        .panel-title {
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+        .panel-subtitle {
+            color: #555;
+
+            font-size: 10px;
+
+            margin-top: 4px;
+        }
+
+        .panel-action {
+            color: #4da3ff;
+
+            font-size: 11px;
+
+            cursor: pointer;
+        }
+
+
+        /* ==============================
+           MAP
+        ============================== */
+
+        .map-container {
+            height: 390px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    transparent 49%,
+                    #151515 50%,
+                    transparent 51%
+                ),
+                linear-gradient(
+                    transparent 49%,
+                    #151515 50%,
+                    transparent 51%
+                );
+
+            background-size: 70px 70px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        /* MAP INDIA SHAPE PLACEHOLDER */
+
+        .india-shape {
+            position: absolute;
+
+            width: 220px;
+            height: 270px;
+
+            left: 50%;
+            top: 50%;
+
+            transform:
+                translate(-50%, -50%)
+                rotate(-3deg);
+
+            background: #121212;
+
+            clip-path: polygon(
+                42% 0%,
+                65% 9%,
+                72% 25%,
+                89% 34%,
+                76% 48%,
+                72% 63%,
+                58% 72%,
+                53% 100%,
+                42% 82%,
+                32% 70%,
+                28% 53%,
+                15% 40%,
+                23% 26%,
+                35% 19%
+            );
+
+            border: 1px solid #252525;
+        }
+
+
+        /* MAP MARKERS */
+
+        .marker {
+            position: absolute;
+
+            width: 12px;
+            height: 12px;
+
+            border-radius: 50%;
+
+            cursor: pointer;
+        }
+
+        .marker::after {
+            content: "";
+
+            position: absolute;
+
+            width: 22px;
+            height: 22px;
+
+            border-radius: 50%;
+
+            border: 1px solid currentColor;
+
+            opacity: 0.2;
+
+            top: -5px;
+            left: -5px;
+
+            animation: pulse 2s infinite;
+        }
+
+        .marker.safe {
+            background: #4caf50;
+            color: #4caf50;
+        }
+
+        .marker.warning {
+            background: #ffc107;
+            color: #ffc107;
+        }
+
+        .marker.danger {
+            background: #ff4d4d;
+            color: #ff4d4d;
+        }
+
+        @keyframes pulse {
+
+            0% {
+                transform: scale(0.7);
+                opacity: 0.7;
+            }
+
+            70% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+
+            100% {
+                transform: scale(1.3);
+                opacity: 0;
+            }
+
+        }
+
+
+        /* MARKER POSITIONS */
+
+        .marker-1 {
+            left: 51%;
+            top: 42%;
+        }
+
+        .marker-2 {
+            left: 57%;
+            top: 52%;
+        }
+
+        .marker-3 {
+            left: 47%;
+            top: 55%;
+        }
+
+        .marker-4 {
+            left: 63%;
+            top: 48%;
+        }
+
+        .marker-5 {
+            left: 43%;
+            top: 37%;
+        }
+
+
+        /* MAP LEGEND */
+
+        .map-legend {
+            position: absolute;
+
+            bottom: 15px;
+            left: 15px;
+
+            background: #0b0b0b;
+
+            border: 1px solid #252525;
+
+            border-radius: 8px;
+
+            padding: 10px 12px;
+
+            display: flex;
+
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: #666;
+
+            font-size: 10px;
+        }
+
+        .legend-dot {
+            width: 7px;
+            height: 7px;
+
+            border-radius: 50%;
+        }
+
+        .legend-dot.safe {
+            background: #4caf50;
+        }
+
+        .legend-dot.warning {
+            background: #ffc107;
+        }
+
+        .legend-dot.danger {
+            background: #ff4d4d;
+        }
+
+
+        /* ==============================
+           AI PANEL
+        ============================== */
+
+        .ai-content {
+            padding: 22px;
+        }
+
+        .ai-badge {
+            display: inline-flex;
+
+            padding: 5px 9px;
+
+            border-radius: 5px;
+
+            background: #151515;
+
+            border: 1px solid #282828;
+
+            color: #4da3ff;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 18px;
+        }
+
+        .ai-title {
+            font-size: 19px;
+
+            font-weight: 700;
+
+            letter-spacing: -0.5px;
+
+            margin-bottom: 8px;
+        }
+
+        .ai-text {
+            color: #666;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            margin-bottom: 22px;
+        }
+
+
+        /* RISK */
+
+        .risk-box {
+            background: #101010;
+
+            border: 1px solid #222;
+
+            border-radius: 10px;
+
+            padding: 15px;
+
+            margin-bottom: 20px;
+        }
+
+        .risk-top {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 12px;
+        }
+
+        .risk-label {
+            color: #777;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+
+            font-weight: 600;
+        }
+
+        .risk-value {
+            font-size: 22px;
+
+            font-weight: 700;
+
+            color: #ff6262;
+        }
+
+        .risk-bar {
+            height: 5px;
+
+            background: #222;
+
+            border-radius: 10px;
+
+            overflow: hidden;
+        }
+
+        .risk-progress {
+            width: 82%;
+
+            height: 100%;
+
+            background: #ff6262;
+
+            border-radius: 10px;
+        }
+
+
+        /* RECOMMENDATION */
+
+        .recommendation {
+            border-left: 2px solid #4da3ff;
+
+            padding-left: 13px;
+        }
+
+        .recommendation-title {
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-bottom: 6px;
+        }
+
+        .recommendation-text {
+            color: #666;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        /* ==============================
+           BOTTOM GRID
+        ============================== */
+
+        .bottom-grid {
+            display: grid;
+
+            grid-template-columns:
+                1.6fr 1fr;
+
+            gap: 20px;
+        }
+
+
+        /* ==============================
+           REPORTS
+        ============================== */
+
+        .report {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 15px 20px;
+
+            border-bottom: 1px solid #161616;
+
+            transition: 0.2s;
+        }
+
+        .report:last-child {
+            border-bottom: none;
+        }
+
+        .report:hover {
+            background: #101010;
+        }
+
+        .report-left {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+        .report-icon {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 8px;
+
+            background: #151515;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #777;
+
+            font-size: 13px;
+        }
+
+        .report-name {
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 4px;
+        }
+
+        .report-location {
+            color: #555;
+
+            font-size: 10px;
+        }
+
+        .report-status {
+            font-size: 9px;
+
+            font-weight: 700;
+
+            padding: 5px 8px;
+
+            border-radius: 5px;
+        }
+
+        .status-high {
+            background: #2b1717;
+            color: #ff6666;
+        }
+
+        .status-medium {
+            background: #2b2615;
+            color: #e5bb4a;
+        }
+
+        .status-low {
+            background: #16251a;
+            color: #65b978;
+        }
+
+
+        /* ==============================
+           QUICK ACTIONS
+        ============================== */
+
+        .quick-actions {
+            padding: 20px;
+        }
+
+        .quick-action {
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 13px;
+
+            border: 1px solid #202020;
+
+            border-radius: 9px;
+
+            margin-bottom: 9px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .quick-action:last-child {
+            margin-bottom: 0;
+        }
+
+        .quick-action:hover {
+            background: #121212;
+
+            border-color: #333;
+        }
+
+        .quick-action-icon {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 8px;
+
+            background: #151515;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #4da3ff;
+        }
+
+        .quick-action-title {
+            font-size: 11px;
+
+            font-weight: 600;
+
+            margin-bottom: 3px;
+        }
+
+        .quick-action-text {
+            font-size: 9px;
+
+            color: #555;
+        }
+
+
+        /* ==============================
+           MOBILE SIDEBAR BUTTON
+        ============================== */
+
+        .menu-btn {
+            display: none;
+
+            width: 35px;
+            height: 35px;
+
+            border: 1px solid #252525;
+
+            background: #101010;
+
+            color: white;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+        }
+
+
+        /* ==============================
+           RESPONSIVE
+        ============================== */
+
+        @media (max-width: 1100px) {
+
+            .stats-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .dashboard-grid,
+            .bottom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search-container {
+                width: 300px;
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+
+                transition: 0.25s;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+
+                width: 100%;
+            }
+
+            .menu-btn {
+                display: flex;
+
+                align-items: center;
+                justify-content: center;
+            }
+
+            .topbar {
+                padding: 0 18px;
+
+                gap: 12px;
+            }
+
+            .search-container {
+                flex: 1;
+
+                width: auto;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .content {
+                padding: 25px 18px;
+            }
+
+            .welcome {
+                align-items: flex-start;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .top-actions {
+                gap: 6px;
+            }
+
+            .top-icon {
+                display: none;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .date-box {
+                display: none;
+            }
+
+            .map-container {
+                height: 300px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
+
 <body>
 
-    <h1>Welcome to Infra Shield</h1>
 
-    <p>
-        Welcome,
-        {{ request.user.first_name }}
-        {{ request.user.last_name }}
-    </p>
+<div class="app">
 
-    <p>
-        {{ request.user.email }}
-    </p>
 
-    <a href="{% url 'logout' %}">
-        Logout
-    </a>
+    <!-- =================================
+         SIDEBAR
+    ================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="logo">
+            INFRA<span>SHIELD</span>
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="section-title">
+                OVERVIEW
+            </div>
+
+
+            <a href="#"
+               class="nav-item active">
+
+                <span class="nav-icon">⌂</span>
+
+                Dashboard
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">◉</span>
+
+                Infrastructure Map
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">+</span>
+
+                Report Issue
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="section-title">
+                INTELLIGENCE
+            </div>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">✦</span>
+
+                AI Analysis
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">▥</span>
+
+                Analytics
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">◷</span>
+
+                Report History
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="section-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">♙</span>
+
+                Profile
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">⚙</span>
+
+                Settings
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'logout' %}"
+               class="nav-item">
+
+                <span class="nav-icon">↪</span>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================
+         MAIN
+    ================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <button
+                class="menu-btn"
+                onclick="toggleSidebar()">
+
+                ☰
+
+            </button>
+
+
+            <div class="search-container">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    class="search-input"
+                    id="locationSearch"
+                    placeholder="Search city, road, bridge or location..."
+                >
+
+            </div>
+
+
+            <div class="top-actions">
+
+
+                <button class="top-icon">
+                    ?
+                </button>
+
+
+                <button class="top-icon">
+                    ♧
+                </button>
+
+
+                <div class="profile">
+
+                    <div class="avatar">
+
+                        {{ request.user.first_name|first|upper }}
+
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <div class="profile-name">
+
+                            {{ request.user.first_name }}
+
+                        </div>
+
+                        <div class="profile-role">
+
+                            Infrastructure Analyst
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+
+            <!-- WELCOME -->
+
+            <div class="welcome">
+
+                <div>
+
+                    <div class="welcome-label">
+                        INFRASTRUCTURE INTELLIGENCE
+                    </div>
+
+                    <h1>
+                        Good to see you,
+                        {{ request.user.first_name }}.
+                    </h1>
+
+                    <p>
+                        Monitor infrastructure health
+                        and identify emerging risks.
+                    </p>
+
+                </div>
+
+
+                <div class="date-box">
+
+                    Friday, 28 August 2026
+
+                </div>
+
+            </div>
+
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats-grid">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Infrastructure Health
+                        </div>
+
+                        <div class="stat-icon">
+                            ◉
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        92%
+                    </div>
+
+                    <div class="stat-description">
+                        <strong>+4.2%</strong>
+                        from last month
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Active Risk Areas
+                        </div>
+
+                        <div class="stat-icon">
+                            !
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        18
+                    </div>
+
+                    <div class="stat-description">
+                        <strong>4 critical</strong>
+                        areas detected
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            Reports Analyzed
+                        </div>
+
+                        <div class="stat-icon">
+                            ◫
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        281
+                    </div>
+
+                    <div class="stat-description">
+                        <strong>+31</strong>
+                        this week
+                    </div>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-top">
+
+                        <div class="stat-label">
+                            AI Confidence
+                        </div>
+
+                        <div class="stat-icon">
+                            ✦
+                        </div>
+
+                    </div>
+
+                    <div class="stat-value">
+                        96.8%
+                    </div>
+
+                    <div class="stat-description">
+                        Model prediction confidence
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- MAP + AI -->
+
+            <div class="dashboard-grid">
+
+
+                <!-- MAP -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Infrastructure Risk Map
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Real-time infrastructure intelligence
+                            </div>
+
+                        </div>
+
+                        <div class="panel-action">
+                            Explore map →
+                        </div>
+
+                    </div>
+
+
+                    <div class="map-container">
+
+                        <div class="india-shape"></div>
+
+
+                        <div class="marker safe marker-1"></div>
+
+                        <div class="marker danger marker-2"></div>
+
+                        <div class="marker warning marker-3"></div>
+
+                        <div class="marker danger marker-4"></div>
+
+                        <div class="marker safe marker-5"></div>
+
+
+                        <div class="map-legend">
+
+                            <div class="legend-item">
+
+                                <span class="legend-dot safe"></span>
+
+                                Safe
+
+                            </div>
+
+                            <div class="legend-item">
+
+                                <span class="legend-dot warning"></span>
+
+                                Warning
+
+                            </div>
+
+                            <div class="legend-item">
+
+                                <span class="legend-dot danger"></span>
+
+                                Critical
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- AI PANEL -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                AI Risk Intelligence
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Latest prediction
+                            </div>
+
+                        </div>
+
+                        <div class="panel-action">
+                            View all
+                        </div>
+
+                    </div>
+
+
+                    <div class="ai-content">
+
+                        <div class="ai-badge">
+                            AI DETECTION
+                        </div>
+
+
+                        <div class="ai-title">
+                            Bridge Infrastructure
+                        </div>
+
+
+                        <div class="ai-text">
+
+                            Computer vision analysis detected
+                            structural anomalies requiring
+                            further inspection.
+
+                        </div>
+
+
+                        <div class="risk-box">
+
+                            <div class="risk-top">
+
+                                <div class="risk-label">
+                                    Failure Risk
+                                </div>
+
+                                <div class="risk-value">
+                                    82%
+                                </div>
+
+                            </div>
+
+
+                            <div class="risk-bar">
+
+                                <div class="risk-progress"></div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="recommendation">
+
+                            <div class="recommendation-title">
+
+                                Recommended Action
+
+                            </div>
+
+                            <div class="recommendation-text">
+
+                                Schedule a structural inspection
+                                within the next 48 hours.
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- BOTTOM -->
+
+            <div class="bottom-grid">
+
+
+                <!-- REPORTS -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Recent Infrastructure Reports
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Latest submitted observations
+                            </div>
+
+                        </div>
+
+                        <div class="panel-action">
+                            View history →
+                        </div>
+
+                    </div>
+
+
+                    <div class="report">
+
+
+                        <div class="report-left">
+
+                            <div class="report-icon">
+                                ◇
+                            </div>
+
+                            <div>
+
+                                <div class="report-name">
+                                    Structural Crack
+                                </div>
+
+                                <div class="report-location">
+                                    Lucknow, Uttar Pradesh
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="report-status status-high">
+                            HIGH RISK
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="report">
+
+                        <div class="report-left">
+
+                            <div class="report-icon">
+                                ▱
+                            </div>
+
+                            <div>
+
+                                <div class="report-name">
+                                    Road Surface Damage
+                                </div>
+
+                                <div class="report-location">
+                                    Kanpur, Uttar Pradesh
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="report-status status-medium">
+                            MEDIUM
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="report">
+
+                        <div class="report-left">
+
+                            <div class="report-icon">
+                                ║
+                            </div>
+
+                            <div>
+
+                                <div class="report-name">
+                                    Railway Track Anomaly
+                                </div>
+
+                                <div class="report-location">
+                                    New Delhi, Delhi
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="report-status status-high">
+                            HIGH RISK
+                        </div>
+
+                    </div>
+
+
+
+                    <div class="report">
+
+                        <div class="report-left">
+
+                            <div class="report-icon">
+                                △
+                            </div>
+
+                            <div>
+
+                                <div class="report-name">
+                                    Street Infrastructure
+                                </div>
+
+                                <div class="report-location">
+                                    Jaipur, Rajasthan
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="report-status status-low">
+                            LOW
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- QUICK ACTIONS -->
+
+                <div class="panel">
+
+                    <div class="panel-header">
+
+                        <div>
+
+                            <div class="panel-title">
+                                Quick Actions
+                            </div>
+
+                            <div class="panel-subtitle">
+                                Frequently used tools
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <div class="quick-action">
+
+                            <div class="quick-action-icon">
+                                +
+                            </div>
+
+                            <div>
+
+                                <div class="quick-action-title">
+                                    Report Infrastructure Issue
+                                </div>
+
+                                <div class="quick-action-text">
+                                    Submit a new observation
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="quick-action">
+
+                            <div class="quick-action-icon">
+                                ✦
+                            </div>
+
+                            <div>
+
+                                <div class="quick-action-title">
+                                    Run AI Analysis
+                                </div>
+
+                                <div class="quick-action-text">
+                                    Analyze infrastructure imagery
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="quick-action">
+
+                            <div class="quick-action-icon">
+                                ◉
+                            </div>
+
+                            <div>
+
+                                <div class="quick-action-title">
+                                    Explore Infrastructure Map
+                                </div>
+
+                                <div class="quick-action-text">
+                                    View regional risk intelligence
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    /* ============================
+       SIDEBAR
+    ============================ */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        sidebar.classList.toggle("open");
+
+    }
+
+
+    /* ============================
+       LOCATION SEARCH
+    ============================ */
+
+    const search =
+        document.getElementById("locationSearch");
+
+
+    search.addEventListener(
+        "keypress",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                const location =
+                    search.value.trim();
+
+                if (location) {
+
+                    alert(
+                        "Location search will be connected to the infrastructure map: "
+                        + location
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+</script>
+
 
 </body>
 

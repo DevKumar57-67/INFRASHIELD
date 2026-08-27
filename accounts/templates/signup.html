@@ -199,8 +199,20 @@
                 {{ form.email.errors }}
             </div>
 
+            <div class="form-group">
+                <label>PASSWORD</label>
+                {{ form.password }}
+                {{ form.password.errors }}
+            </div>
+
+            <div class="form-group">
+                <label>CONFIRM PASSWORD</label>
+                {{ form.password_confirmation }}
+                {{ form.password_confirmation.errors }}
+            </div>
+
             <button type="submit" class="submit-btn">
-                Continue with Email →
+                Create account
             </button>
 
         </form>

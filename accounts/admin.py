@@ -1,10 +1,26 @@
 from django.contrib import admin
+from .models import InfrastructureReport
 
-from .models import EmailOTP
 
+@admin.register(InfrastructureReport)
+class InfrastructureReportAdmin(admin.ModelAdmin):
 
-@admin.register(EmailOTP)
-class EmailOTPAdmin(admin.ModelAdmin):
-	list_display = ("user", "created_at", "expires_at", "is_verified", "attempts")
-	list_filter = ("is_verified",)
-	search_fields = ("user__email",)
+    list_display = (
+        "title",
+        "infrastructure_type",
+        "location",
+        "risk_level",
+        "created_at",
+    )
+
+    list_filter = (
+        "infrastructure_type",
+        "risk_level",
+        "created_at",
+    )
+
+    search_fields = (
+        "title",
+        "location",
+        "description",
+    )
