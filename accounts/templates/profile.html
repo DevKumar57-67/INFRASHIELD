@@ -1,0 +1,1085 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Profile | Infra Shield</title>
+
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: 'Inter', sans-serif;
+
+            background: #050505;
+
+            color: #ffffff;
+
+            min-height: 100vh;
+
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+        /* ==========================
+           LAYOUT
+        ========================== */
+
+        .page {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+
+            height: 72px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 40px;
+
+            border-bottom: 1px solid #1c1c1c;
+
+            background: #090909;
+
+        }
+
+
+        .logo {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+        }
+
+
+        .logo span {
+
+            color: #4da3ff;
+
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .back-btn {
+
+            color: #777;
+
+            font-size: 12px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .back-btn:hover {
+
+            color: white;
+
+        }
+
+
+        .nav-avatar {
+
+            width: 36px;
+
+            height: 36px;
+
+            border-radius: 50%;
+
+            background: #181818;
+
+            border: 1px solid #303030;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+        }
+
+
+        /* ==========================
+           MAIN
+        ========================== */
+
+        .main {
+
+            width: 100%;
+
+            max-width: 1000px;
+
+            margin: 0 auto;
+
+            padding: 45px 25px 70px;
+
+        }
+
+
+        .heading {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .heading-label {
+
+            color: #4da3ff;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .heading h1 {
+
+            font-size: 30px;
+
+            letter-spacing: -1.3px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .heading p {
+
+            color: #666;
+
+            font-size: 13px;
+
+        }
+
+
+        /* ==========================
+           PROFILE CARD
+        ========================== */
+
+        .profile-card {
+
+            background: #0b0b0b;
+
+            border: 1px solid #202020;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+        }
+
+
+        /* ==========================
+           PROFILE HEADER
+        ========================== */
+
+        .profile-header {
+
+            padding: 30px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 25px;
+
+            border-bottom: 1px solid #1c1c1c;
+
+        }
+
+
+        .profile-picture {
+
+            width: 90px;
+
+            height: 90px;
+
+            border-radius: 50%;
+
+            background: #161616;
+
+            border: 1px solid #303030;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 28px;
+
+            font-weight: 700;
+
+            color: #777;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .profile-picture img {
+
+            width: 100%;
+
+            height: 100%;
+
+            object-fit: cover;
+
+        }
+
+
+        .profile-header-info h2 {
+
+            font-size: 20px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .profile-email {
+
+            color: #666;
+
+            font-size: 12px;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .account-badge {
+
+            display: inline-block;
+
+            background: #151515;
+
+            border: 1px solid #282828;
+
+            color: #777;
+
+            font-size: 9px;
+
+            font-weight: 700;
+
+            padding: 5px 8px;
+
+            border-radius: 5px;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        /* ==========================
+           FORM
+        ========================== */
+
+        .form-section {
+
+            padding: 30px;
+
+        }
+
+
+        .section-heading {
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .form-grid {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 20px;
+
+        }
+
+
+        .form-group {
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        .form-group.full {
+
+            grid-column: 1 / -1;
+
+        }
+
+
+        label {
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            color: #777;
+
+            margin-bottom: 8px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            background: #101010;
+
+            border: 1px solid #252525;
+
+            border-radius: 8px;
+
+            color: white;
+
+            padding: 12px 13px;
+
+            font-family: inherit;
+
+            font-size: 12px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color: #444;
+
+        }
+
+
+        textarea {
+
+            resize: vertical;
+
+            min-height: 110px;
+
+        }
+
+
+        input::placeholder,
+        textarea::placeholder {
+
+            color: #444;
+
+        }
+
+
+        /* ==========================
+           EMAIL FIELD
+        ========================== */
+
+        .email-input {
+
+            opacity: 0.55;
+
+            cursor: not-allowed;
+
+        }
+
+
+        .field-note {
+
+            color: #444;
+
+            font-size: 9px;
+
+            margin-top: 6px;
+
+        }
+
+
+        /* ==========================
+           PHOTO UPLOAD
+        ========================== */
+
+        .upload-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .upload-button {
+
+            display: inline-block;
+
+            background: #151515;
+
+            border: 1px solid #292929;
+
+            border-radius: 7px;
+
+            padding: 9px 13px;
+
+            color: #aaa;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .upload-button:hover {
+
+            border-color: #444;
+
+            color: white;
+
+        }
+
+
+        #profileImage {
+
+            display: none;
+
+        }
+
+
+        .file-name {
+
+            color: #555;
+
+            font-size: 10px;
+
+        }
+
+
+        /* ==========================
+           FOOTER ACTIONS
+        ========================== */
+
+        .form-actions {
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #1c1c1c;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+        }
+
+
+        .cancel-btn {
+
+            background: transparent;
+
+            border: 1px solid #292929;
+
+            color: #777;
+
+            padding: 11px 18px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            cursor: pointer;
+
+        }
+
+
+        .save-btn {
+
+            background: #ffffff;
+
+            border: none;
+
+            color: #000000;
+
+            padding: 11px 20px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .save-btn:hover {
+
+            background: #dddddd;
+
+        }
+
+
+        /* ==========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 0 18px;
+
+            }
+
+
+            .main {
+
+                padding: 30px 15px;
+
+            }
+
+
+            .profile-header {
+
+                padding: 22px;
+
+            }
+
+
+            .form-section {
+
+                padding: 22px;
+
+            }
+
+
+            .form-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .form-group.full {
+
+                grid-column: auto;
+
+            }
+
+
+            .profile-picture {
+
+                width: 70px;
+
+                height: 70px;
+
+                font-size: 22px;
+
+            }
+
+
+            .profile-header-info h2 {
+
+                font-size: 17px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- ==========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            INFRA<span>SHIELD</span>
+
+        </div>
+
+
+        <div class="nav-right">
+
+            <a href="{% url 'dashboard' %}"
+               class="back-btn">
+
+                ← Back to Dashboard
+
+            </a>
+
+
+            <div class="nav-avatar">
+
+                {{ user.first_name|first|upper }}
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ==========================
+         MAIN
+    ========================== -->
+
+    <main class="main">
+
+
+        <div class="heading">
+
+            <div class="heading-label">
+                ACCOUNT
+            </div>
+
+            <h1>
+                Your Profile
+            </h1>
+
+            <p>
+                Manage your Infra Shield account and personal information.
+            </p>
+
+        </div>
+
+
+
+        <!-- PROFILE CARD -->
+
+        <div class="profile-card">
+
+
+            <!-- PROFILE HEADER -->
+
+            <div class="profile-header">
+
+
+                <div class="profile-picture"
+                     id="profilePreview">
+
+                    {% if profile.profile_picture %}
+
+                        <img
+                            src="{{ profile.profile_picture.url }}"
+                            alt="Profile picture">
+
+                    {% else %}
+
+                        {{ user.first_name|first|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="profile-header-info">
+
+                    <h2>
+
+                        {{ user.first_name }}
+                        {{ user.last_name }}
+
+                    </h2>
+
+
+                    <div class="profile-email">
+
+                        {{ user.email }}
+
+                    </div>
+
+
+                    <div class="account-badge">
+
+                        INFRA SHIELD MEMBER
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- FORM -->
+
+            <div class="form-section">
+
+
+                <div class="section-heading">
+
+                    Personal Information
+
+                </div>
+
+
+                <form
+                    method="POST"
+                    enctype="multipart/form-data">
+
+
+                    {% csrf_token %}
+
+
+                    <!-- PHOTO -->
+
+                    <div class="upload-area">
+
+                        <label
+                            for="profileImage"
+                            class="upload-button">
+
+                            Change Profile Picture
+
+                        </label>
+
+
+                        <input
+                            type="file"
+                            id="profileImage"
+                            name="profile_picture"
+                            accept="image/*">
+
+
+                        <span
+                            class="file-name"
+                            id="fileName">
+
+                            No image selected
+
+                        </span>
+
+                    </div>
+
+
+
+                    <!-- FORM GRID -->
+
+                    <div class="form-grid">
+
+
+                        <!-- FIRST NAME -->
+
+                        <div class="form-group">
+
+                            <label>
+                                First Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="first_name"
+                                value="{{ user.first_name }}"
+                                placeholder="Enter first name">
+
+                        </div>
+
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Last Name
+                            </label>
+
+                            <input
+                                type="text"
+                                name="last_name"
+                                value="{{ user.last_name }}"
+                                placeholder="Enter last name">
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-group full">
+
+                            <label>
+                                Email Address
+                            </label>
+
+                            <input
+                                type="email"
+                                value="{{ user.email }}"
+                                class="email-input"
+                                disabled>
+
+                            <div class="field-note">
+
+                                Your email address is linked to your account
+                                and cannot be changed here.
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- LOCATION -->
+
+                        <div class="form-group full">
+
+                            <label>
+                                Location
+                            </label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                value="{{ profile.location }}"
+                                placeholder="e.g. Lucknow, Uttar Pradesh">
+
+                        </div>
+
+
+
+                        <!-- PHONE -->
+
+                        <div class="form-group">
+
+                            <label>
+                                Phone Number
+                            </label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                value="{{ profile.phone }}"
+                                placeholder="Optional">
+
+                        </div>
+
+
+
+                        <!-- BIO -->
+
+                        <div class="form-group full">
+
+                            <label>
+                                Bio
+                            </label>
+
+                            <textarea
+                                name="bio"
+                                placeholder="Tell us a little about yourself...">{{ profile.bio }}</textarea>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="form-actions">
+
+                        <a
+                            href="{% url 'dashboard' %}"
+                            class="cancel-btn">
+
+                            Cancel
+
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="save-btn">
+
+                            Save Changes
+
+                        </button>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+    const imageInput =
+        document.getElementById("profileImage");
+
+    const fileName =
+        document.getElementById("fileName");
+
+    const preview =
+        document.getElementById("profilePreview");
+
+
+    imageInput.addEventListener(
+        "change",
+        function() {
+
+            const file = this.files[0];
+
+            if (!file) {
+
+                fileName.textContent =
+                    "No image selected";
+
+                return;
+
+            }
+
+
+            fileName.textContent =
+                file.name;
+
+
+            const reader =
+                new FileReader();
+
+
+            reader.onload =
+                function(event) {
+
+                    preview.innerHTML =
+                        `<img src="${event.target.result}"
+                              alt="Profile preview">`;
+
+                };
+
+
+            reader.readAsDataURL(file);
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>
