@@ -1244,7 +1244,7 @@
             </a>
 
 
-            <a href="#"
+            <a href="{% url 'create_report' %}"
                class="nav-item">
 
                 <span class="nav-icon">+</span>
@@ -1312,7 +1312,7 @@
             </a>
 
 
-            <a href="#"
+            <a href="{% url 'settings' %}"
                class="nav-item">
 
                 <span class="nav-icon">⚙</span>
@@ -1394,6 +1394,7 @@
                 <div class="profile">
 
                     <div class="avatar">
+                        <a href = "{% url 'profile' %}"
 
                         {{ request.user.first_name|first|upper }}
 
@@ -1410,7 +1411,7 @@
 
                         <div class="profile-role">
 
-                            Infrastructure Analyst
+                            {{ request.user.bio }}
 
                         </div>
 

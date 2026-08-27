@@ -558,4 +558,4 @@ A formal open-source license will be added before public release.
 Built with Python, Django, Computer Vision, and AI.
 
 
-Built BYTeam MINDSYNC 
+Built BY Team MINDSYNC for the SIH 2026

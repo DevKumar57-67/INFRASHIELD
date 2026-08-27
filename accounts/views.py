@@ -3,9 +3,9 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-
+from .forms import SignupForm, InfrastructureReportForm
 from .forms import SignupForm
-
+from .forms import SignupForm, InfrastructureReportForm
 
 # ==============================
 # SPLASH PAGE
@@ -227,6 +227,64 @@ def profile_view(request):
             "profile": profile
         }
     )
+
+@login_required
+def settings_view(request):
+
+    from .models import UserSettings
+
+    user = request.user
+
+    settings, created = UserSettings.objects.get_or_create(
+        user=user
+    )
+
+    if request.method == "POST":
+
+        settings.risk_alerts = (
+            request.POST.get("risk_alerts") == "on"
+        )
+
+        settings.report_updates = (
+            request.POST.get("report_updates") == "on"
+        )
+
+        settings.system_notifications = (
+            request.POST.get("system_notifications") == "on"
+        )
+
+        settings.theme = request.POST.get(
+            "theme",
+            "dark"
+        )
+
+        settings.language = request.POST.get(
+            "language",
+            "English"
+        )
+
+        settings.default_map_view = request.POST.get(
+            "default_map_view",
+            "standard"
+        )
+
+        settings.save()
+
+        messages.success(
+            request,
+            "Settings updated successfully."
+        )
+
+        return redirect("settings")
+
+    return render(
+        request,
+        "settings.html",
+        {
+            "user": user,
+            "settings": settings
+        }
+    )
 # ==============================
 # LOGOUT
 # ==============================
@@ -242,3 +300,84 @@ def logout_view(request):
     )
 
     return redirect("splash")
+
+
+@login_required
+def create_report(request):
+
+    if request.method == "POST":
+
+        form = InfrastructureReportForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+
+            report = form.save(
+                commit=False
+            )
+
+            report.user = request.user
+
+            report.save()
+
+            messages.success(
+                request,
+                "Infrastructure report submitted successfully."
+            )
+
+            return redirect(
+                "my_reports"
+            )
+
+    else:
+
+        form = InfrastructureReportForm()
+
+    return render(
+        request,
+        "create_report.html",
+        {
+            "form": form
+        }
+    )
+
+
+@login_required
+def create_report(request):
+
+    if request.method == "POST":
+
+        form = InfrastructureReportForm(
+            request.POST,
+            request.FILES
+        )
+
+        if form.is_valid():
+
+            report = form.save(commit=False)
+
+            report.user = request.user
+
+            report.save()
+
+            messages.success(
+                request,
+                "Infrastructure report submitted successfully."
+            )
+
+            return redirect("my_reports")
+
+    else:
+
+        form = InfrastructureReportForm()
+
+    return render(
+        request,
+        "create_report.html",
+        {
+            "form": form
+        }
+    )
+

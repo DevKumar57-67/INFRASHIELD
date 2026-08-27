@@ -1,6 +1,6 @@
 from django.contrib import admin
 from .models import InfrastructureReport, Profile
-
+from .models import InfrastructureReport, Profile, UserSettings
 
 @admin.register(InfrastructureReport)
 class InfrastructureReportAdmin(admin.ModelAdmin):
@@ -39,4 +39,22 @@ class ProfileAdmin(admin.ModelAdmin):
         "user__username",
         "user__email",
         "location",
+    )
+
+@admin.register(UserSettings)
+class UserSettingsAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "user",
+        "risk_alerts",
+        "report_updates",
+        "system_notifications",
+        "theme",
+        "language",
+        "default_map_view",
+    )
+
+    search_fields = (
+        "user__username",
+        "user__email",
     )

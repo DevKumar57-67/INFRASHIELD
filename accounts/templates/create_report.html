@@ -1,0 +1,931 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+    <title>Report Infrastructure | Infra Shield</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #050505;
+
+            color: #ffffff;
+
+            min-height: 100vh;
+
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+
+            height: 72px;
+
+            background: #090909;
+
+            border-bottom:
+                1px solid #1d1d1d;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 40px;
+
+        }
+
+
+        .logo {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+        }
+
+
+        .logo span {
+
+            color: #4da3ff;
+
+        }
+
+
+        .back {
+
+            color: #777;
+
+            font-size: 12px;
+
+        }
+
+
+        .back:hover {
+
+            color: #ffffff;
+
+        }
+
+
+        /* ==========================
+           CONTAINER
+        ========================== */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 850px;
+
+            margin: auto;
+
+            padding: 45px 25px 80px;
+
+        }
+
+
+        /* ==========================
+           HEADING
+        ========================== */
+
+        .eyebrow {
+
+            color: #4da3ff;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        h1 {
+
+            font-size: 31px;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .intro {
+
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        /* ==========================
+           FORM CARD
+        ========================== */
+
+        .form-card {
+
+            background: #0b0b0b;
+
+            border: 1px solid #202020;
+
+            border-radius: 14px;
+
+            padding: 30px;
+
+        }
+
+
+        /* ==========================
+           FORM GROUP
+        ========================== */
+
+        .form-group {
+
+            margin-bottom: 24px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            font-size: 11px;
+
+            font-weight: 600;
+
+            margin-bottom: 9px;
+
+            color: #dddddd;
+
+        }
+
+
+        .required {
+
+            color: #4da3ff;
+
+        }
+
+
+        input,
+        textarea,
+        select {
+
+            width: 100%;
+
+            background: #111111;
+
+            border: 1px solid #292929;
+
+            color: #ffffff;
+
+            border-radius: 8px;
+
+            padding: 12px 13px;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            outline: none;
+
+            transition: 0.2s;
+
+        }
+
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+
+            border-color: #4da3ff;
+
+        }
+
+
+        textarea {
+
+            resize: vertical;
+
+            min-height: 120px;
+
+        }
+
+
+        select option {
+
+            background: #111111;
+
+            color: #ffffff;
+
+        }
+
+
+        /* ==========================
+           IMAGE UPLOAD
+        ========================== */
+
+        .upload-box {
+
+            border: 1px dashed #333333;
+
+            border-radius: 10px;
+
+            padding: 25px;
+
+            text-align: center;
+
+            background: #090909;
+
+            transition: 0.2s;
+
+        }
+
+
+        .upload-box:hover {
+
+            border-color: #555555;
+
+        }
+
+
+        .upload-icon {
+
+            font-size: 28px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .upload-text {
+
+            color: #aaa;
+
+            font-size: 11px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .upload-help {
+
+            color: #555;
+
+            font-size: 9px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .upload-box input {
+
+            background: transparent;
+
+            border: none;
+
+            padding: 0;
+
+        }
+
+
+        /* ==========================
+           LOCATION
+        ========================== */
+
+        .location-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+
+        }
+
+
+        /* ==========================
+           HELP TEXT
+        ========================== */
+
+        .help {
+
+            color: #555;
+
+            font-size: 9px;
+
+            margin-top: 7px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* ==========================
+           ERRORS
+        ========================== */
+
+        .error {
+
+            color: #e56b6b;
+
+            font-size: 10px;
+
+            margin-top: 6px;
+
+        }
+
+
+        /* ==========================
+           SUBMIT
+        ========================== */
+
+        .submit-area {
+
+            margin-top: 30px;
+
+            padding-top: 25px;
+
+            border-top: 1px solid #1c1c1c;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+        }
+
+
+        .submit-button {
+
+            background: #ffffff;
+
+            color: #000000;
+
+            border: none;
+
+            padding: 13px 24px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .submit-button:hover {
+
+            background: #dddddd;
+
+            transform:
+                translateY(-1px);
+
+        }
+
+
+        /* ==========================
+           INFO
+        ========================== */
+
+        .info-box {
+
+            margin-top: 20px;
+
+            background: #090909;
+
+            border:
+                1px solid #1c1c1c;
+
+            border-radius: 10px;
+
+            padding: 18px;
+
+        }
+
+
+        .info-title {
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .info-text {
+
+            color: #555;
+
+            font-size: 9px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* ==========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 0 18px;
+
+            }
+
+
+            .container {
+
+                padding:
+                    30px 15px 60px;
+
+            }
+
+
+            .form-card {
+
+                padding: 20px;
+
+            }
+
+
+            .location-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            h1 {
+
+                font-size: 27px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+
+        <div class="logo">
+
+            INFRA<span>SHIELD</span>
+
+        </div>
+
+
+        <a
+            href="{% url 'dashboard' %}"
+            class="back">
+
+            ← Dashboard
+
+        </a>
+
+
+    </nav>
+
+
+
+    <!-- MAIN -->
+
+    <main class="container">
+
+
+        <div class="eyebrow">
+
+            INFRASTRUCTURE REPORT
+
+        </div>
+
+
+        <h1>
+
+            Report an Infrastructure Issue
+
+        </h1>
+
+
+        <p class="intro">
+
+            Help identify infrastructure risks by
+            submitting an issue with relevant
+            information and visual evidence.
+
+        </p>
+
+
+
+        <div class="form-card">
+
+
+            <form
+                method="POST"
+                enctype="multipart/form-data">
+
+
+                {% csrf_token %}
+
+
+
+                <!-- FORM ERRORS -->
+
+                {% if form.non_field_errors %}
+
+                    <div class="error">
+
+                        {{ form.non_field_errors }}
+
+                    </div>
+
+                {% endif %}
+
+
+
+                <!-- INFRASTRUCTURE TYPE -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Infrastructure Type
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    {{ form.infrastructure_type }}
+
+
+                    {% for error in form.infrastructure_type.errors %}
+
+                        <div class="error">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Issue Title
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    {{ form.title }}
+
+
+                    {% for error in form.title.errors %}
+
+                        <div class="error">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Description
+
+                    </label>
+
+
+                    {{ form.description }}
+
+
+                    <div class="help">
+
+                        Describe what you observed,
+                        including visible damage,
+                        unusual conditions, or
+                        safety concerns.
+
+                    </div>
+
+
+                    {% for error in form.description.errors %}
+
+                        <div class="error">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+
+                <!-- IMAGE -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Infrastructure Image
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    <div class="upload-box">
+
+
+                        <div class="upload-icon">
+
+                            📷
+
+                        </div>
+
+
+                        <div class="upload-text">
+
+                            Upload visual evidence
+
+                        </div>
+
+
+                        <div class="upload-help">
+
+                            JPG, JPEG, PNG or WEBP
+
+                        </div>
+
+
+                        {{ form.image }}
+
+
+                    </div>
+
+
+                    {% for error in form.image.errors %}
+
+                        <div class="error">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+
+                <!-- LOCATION -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Location
+                        <span class="required">*</span>
+
+                    </label>
+
+
+                    {{ form.location }}
+
+
+                    <div class="help">
+
+                        Enter the address, locality,
+                        city or other useful location
+                        information.
+
+                    </div>
+
+
+                    {% for error in form.location.errors %}
+
+                        <div class="error">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+
+                <!-- COORDINATES -->
+
+                <div class="form-group">
+
+                    <label>
+
+                        Geographic Coordinates
+
+                    </label>
+
+
+                    <div class="location-grid">
+
+
+                        <div>
+
+                            {{ form.latitude }}
+
+
+                            <div class="help">
+
+                                Latitude
+
+                            </div>
+
+                        </div>
+
+
+                        <div>
+
+                            {{ form.longitude }}
+
+
+                            <div class="help">
+
+                                Longitude
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+                    {% for error in form.latitude.errors %}
+
+                        <div class="error">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+
+                    {% for error in form.longitude.errors %}
+
+                        <div class="error">
+
+                            {{ error }}
+
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+
+                <!-- SUBMIT -->
+
+                <div class="submit-area">
+
+
+                    <button
+                        type="submit"
+                        class="submit-button">
+
+                        Submit Infrastructure Report
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+
+
+        <!-- INFORMATION -->
+
+        <div class="info-box">
+
+
+            <div class="info-title">
+
+                What happens after submission?
+
+            </div>
+
+
+            <div class="info-text">
+
+                Your report will be securely stored
+                and marked as "Pending Analysis".
+                In the next stage, Infra Shield's
+                AI analysis system will evaluate the
+                uploaded infrastructure image and
+                determine the potential risk level.
+
+            </div>
+
+
+        </div>
+
+
+    </main>
+
+
+</body>
+
+</html>
+```

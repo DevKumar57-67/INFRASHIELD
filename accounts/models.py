@@ -130,3 +130,51 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+
+class UserSettings(models.Model):
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="settings"
+    )
+
+    risk_alerts = models.BooleanField(
+        default=True
+    )
+
+    report_updates = models.BooleanField(
+        default=True
+    )
+
+    system_notifications = models.BooleanField(
+        default=True
+    )
+
+    theme = models.CharField(
+        max_length=20,
+        default="dark"
+    )
+
+    language = models.CharField(
+        max_length=20,
+        default="English"
+    )
+
+    default_map_view = models.CharField(
+        max_length=20,
+        default="standard"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    def __str__(self):
+
+        return f"{self.user.username} Settings"

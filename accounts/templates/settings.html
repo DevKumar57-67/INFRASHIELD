@@ -1,0 +1,1528 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Settings | Infra Shield</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family: Arial, Helvetica, sans-serif;
+
+            background: #050505;
+
+            color: #ffffff;
+
+            min-height: 100vh;
+
+        }
+
+
+        a {
+
+            text-decoration: none;
+
+            color: inherit;
+
+        }
+
+
+        /* ==========================
+           PAGE
+        ========================== */
+
+        .page {
+
+            min-height: 100vh;
+
+        }
+
+
+        /* ==========================
+           NAVBAR
+        ========================== */
+
+        .navbar {
+
+            height: 72px;
+
+            background: #090909;
+
+            border-bottom: 1px solid #1d1d1d;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 40px;
+
+        }
+
+
+        .logo {
+
+            font-size: 20px;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+        }
+
+
+        .logo span {
+
+            color: #4da3ff;
+
+        }
+
+
+        .nav-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .back {
+
+            color: #777;
+
+            font-size: 12px;
+
+            transition: 0.2s;
+
+        }
+
+
+        .back:hover {
+
+            color: #ffffff;
+
+        }
+
+
+        .avatar {
+
+            width: 36px;
+
+            height: 36px;
+
+            border-radius: 50%;
+
+            background: #171717;
+
+            border: 1px solid #303030;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* ==========================
+           MAIN CONTAINER
+        ========================== */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 950px;
+
+            margin: 0 auto;
+
+            padding: 45px 25px 80px;
+
+        }
+
+
+        /* ==========================
+           PAGE HEADING
+        ========================== */
+
+        .heading {
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .eyebrow {
+
+            color: #4da3ff;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            letter-spacing: 1.5px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .heading h1 {
+
+            font-size: 31px;
+
+            letter-spacing: -1.5px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .heading p {
+
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* ==========================
+           SETTINGS CARD
+        ========================== */
+
+        .settings-card {
+
+            background: #0b0b0b;
+
+            border: 1px solid #202020;
+
+            border-radius: 14px;
+
+            overflow: hidden;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        /* ==========================
+           SECTION HEADER
+        ========================== */
+
+        .section-header {
+
+            padding: 22px 25px;
+
+            border-bottom: 1px solid #1c1c1c;
+
+        }
+
+
+        .section-header h2 {
+
+            font-size: 14px;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .section-header p {
+
+            color: #555;
+
+            font-size: 11px;
+
+        }
+
+
+        /* ==========================
+           SETTING ROW
+        ========================== */
+
+        .setting {
+
+            min-height: 75px;
+
+            padding: 18px 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            border-bottom: 1px solid #171717;
+
+        }
+
+
+        .setting:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .setting-info {
+
+            flex: 1;
+
+        }
+
+
+        .setting-title {
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .setting-description {
+
+            color: #555;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* ==========================
+           SETTINGS BUTTON
+        ========================== */
+
+        .setting-button {
+
+            background: #151515;
+
+            border: 1px solid #2b2b2b;
+
+            color: #aaa;
+
+            padding: 9px 14px;
+
+            border-radius: 7px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            transition: 0.2s;
+
+        }
+
+
+        .setting-button:hover {
+
+            border-color: #444;
+
+            color: #ffffff;
+
+        }
+
+
+        /* ==========================
+           TOGGLE
+        ========================== */
+
+        .toggle {
+
+            position: relative;
+
+            width: 42px;
+
+            height: 23px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .toggle input {
+
+            display: none;
+
+        }
+
+
+        .slider {
+
+            position: absolute;
+
+            inset: 0;
+
+            background: #222;
+
+            border: 1px solid #333;
+
+            border-radius: 20px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .slider::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 17px;
+
+            height: 17px;
+
+            left: 2px;
+
+            top: 2px;
+
+            background: #777;
+
+            border-radius: 50%;
+
+            transition: 0.2s;
+
+        }
+
+
+        .toggle input:checked + .slider {
+
+            background: #ffffff;
+
+        }
+
+
+        .toggle input:checked + .slider::before {
+
+            transform: translateX(18px);
+
+            background: #000000;
+
+        }
+
+
+        /* ==========================
+           SELECT
+        ========================== */
+
+        select {
+
+            background: #111111;
+
+            border: 1px solid #292929;
+
+            color: #aaa;
+
+            padding: 9px 12px;
+
+            border-radius: 7px;
+
+            font-size: 10px;
+
+            outline: none;
+
+            cursor: pointer;
+
+        }
+
+
+        select:focus {
+
+            border-color: #444;
+
+        }
+
+
+        select option {
+
+            background: #111111;
+
+            color: #ffffff;
+
+        }
+
+
+        /* ==========================
+           SAVE BUTTON
+        ========================== */
+
+        .save-container {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            margin-top: 20px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .save-settings {
+
+            background: #ffffff;
+
+            color: #000000;
+
+            border: none;
+
+            padding: 12px 22px;
+
+            border-radius: 8px;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .save-settings:hover {
+
+            background: #dddddd;
+
+            transform: translateY(-1px);
+
+        }
+
+
+        .save-settings:active {
+
+            transform: translateY(0);
+
+        }
+
+
+        /* ==========================
+           DANGER ZONE
+        ========================== */
+
+        .danger {
+
+            border-color: #332020;
+
+        }
+
+
+        .danger .section-header {
+
+            border-bottom-color: #241818;
+
+        }
+
+
+        .danger-title {
+
+            color: #e56b6b;
+
+        }
+
+
+        .danger-button {
+
+            background: transparent;
+
+            border: 1px solid #552727;
+
+            color: #d56a6a;
+
+            padding: 9px 14px;
+
+            border-radius: 7px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+
+        .danger-button:hover {
+
+            background: #1b0d0d;
+
+            border-color: #753737;
+
+        }
+
+
+        /* ==========================
+           FOOTER
+        ========================== */
+
+        .footer {
+
+            text-align: center;
+
+            color: #3f3f3f;
+
+            font-size: 9px;
+
+            margin-top: 35px;
+
+        }
+
+
+        /* ==========================
+           MOBILE
+        ========================== */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding: 0 18px;
+
+            }
+
+
+            .container {
+
+                padding: 30px 15px 60px;
+
+            }
+
+
+            .heading h1 {
+
+                font-size: 27px;
+
+            }
+
+
+            .setting {
+
+                align-items: flex-start;
+
+            }
+
+
+            .setting-button,
+            select {
+
+                flex-shrink: 0;
+
+            }
+
+
+            .back {
+
+                display: none;
+
+            }
+
+        }
+
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="page">
+
+
+    <!-- ==========================
+         NAVBAR
+    ========================== -->
+
+    <nav class="navbar">
+
+
+        <div class="logo">
+
+            INFRA<span>SHIELD</span>
+
+        </div>
+
+
+        <div class="nav-right">
+
+
+            <a href="{% url 'dashboard' %}"
+               class="back">
+
+                ← Dashboard
+
+            </a>
+
+
+            <div class="avatar">
+
+                {{ user.first_name|first|upper }}
+
+            </div>
+
+
+        </div>
+
+
+    </nav>
+
+
+
+    <!-- ==========================
+         MAIN
+    ========================== -->
+
+    <main class="container">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="heading">
+
+
+            <div class="eyebrow">
+
+                CONFIGURATION
+
+            </div>
+
+
+            <h1>
+
+                Settings
+
+            </h1>
+
+
+            <p>
+
+                Manage your Infra Shield account,
+                notifications and platform preferences.
+
+            </p>
+
+
+        </div>
+
+
+
+        <!-- ==========================
+             ACCOUNT
+        ========================== -->
+
+        <section class="settings-card">
+
+
+            <div class="section-header">
+
+
+                <h2>
+
+                    Account
+
+                </h2>
+
+
+                <p>
+
+                    Manage your account credentials and
+                    personal information.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- EMAIL -->
+
+            <div class="setting">
+
+
+                <div class="setting-info">
+
+
+                    <div class="setting-title">
+
+                        Email Address
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        {{ user.email }}
+
+                    </div>
+
+
+                </div>
+
+
+                <a href="{% url 'profile' %}"
+                   class="setting-button">
+
+                    Manage
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- PASSWORD -->
+
+            <div class="setting">
+
+
+                <div class="setting-info">
+
+
+                    <div class="setting-title">
+
+                        Password
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Change your account password.
+
+                    </div>
+
+
+                </div>
+
+
+                <a href="#"
+                   class="setting-button">
+
+                    Change Password
+
+                </a>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==========================
+             SETTINGS FORM
+        ========================== -->
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+
+            <!-- ==========================
+                 NOTIFICATIONS
+            ========================== -->
+
+            <section class="settings-card">
+
+
+                <div class="section-header">
+
+
+                    <h2>
+
+                        Notifications
+
+                    </h2>
+
+
+                    <p>
+
+                        Control the notifications you receive
+                        from Infra Shield.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- RISK ALERTS -->
+
+                <div class="setting">
+
+
+                    <div class="setting-info">
+
+
+                        <div class="setting-title">
+
+                            Infrastructure Risk Alerts
+
+                        </div>
+
+
+                        <div class="setting-description">
+
+                            Receive alerts when infrastructure
+                            risks require attention.
+
+                        </div>
+
+
+                    </div>
+
+
+                    <label class="toggle">
+
+
+                        <input
+                            type="checkbox"
+                            name="risk_alerts"
+                            {% if settings.risk_alerts %}
+                                checked
+                            {% endif %}>
+
+
+                        <span class="slider"></span>
+
+
+                    </label>
+
+
+                </div>
+
+
+
+                <!-- REPORT UPDATES -->
+
+                <div class="setting">
+
+
+                    <div class="setting-info">
+
+
+                        <div class="setting-title">
+
+                            Report Updates
+
+                        </div>
+
+
+                        <div class="setting-description">
+
+                            Get notified when your infrastructure
+                            reports are analyzed or updated.
+
+                        </div>
+
+
+                    </div>
+
+
+                    <label class="toggle">
+
+
+                        <input
+                            type="checkbox"
+                            name="report_updates"
+                            {% if settings.report_updates %}
+                                checked
+                            {% endif %}>
+
+
+                        <span class="slider"></span>
+
+
+                    </label>
+
+
+                </div>
+
+
+
+                <!-- SYSTEM NOTIFICATIONS -->
+
+                <div class="setting">
+
+
+                    <div class="setting-info">
+
+
+                        <div class="setting-title">
+
+                            System Notifications
+
+                        </div>
+
+
+                        <div class="setting-description">
+
+                            Receive important Infra Shield
+                            platform notifications.
+
+                        </div>
+
+
+                    </div>
+
+
+                    <label class="toggle">
+
+
+                        <input
+                            type="checkbox"
+                            name="system_notifications"
+                            {% if settings.system_notifications %}
+                                checked
+                            {% endif %}>
+
+
+                        <span class="slider"></span>
+
+
+                    </label>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==========================
+                 PREFERENCES
+            ========================== -->
+
+            <section class="settings-card">
+
+
+                <div class="section-header">
+
+
+                    <h2>
+
+                        Preferences
+
+                    </h2>
+
+
+                    <p>
+
+                        Customize your Infra Shield experience.
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- APPEARANCE -->
+
+                <div class="setting">
+
+
+                    <div class="setting-info">
+
+
+                        <div class="setting-title">
+
+                            Appearance
+
+                        </div>
+
+
+                        <div class="setting-description">
+
+                            Choose how Infra Shield appears.
+
+                        </div>
+
+
+                    </div>
+
+
+                    <select name="theme">
+
+
+                        <option
+                            value="dark"
+                            {% if settings.theme == "dark" %}
+                                selected
+                            {% endif %}>
+
+                            Dark
+
+                        </option>
+
+
+                        <option
+                            value="light"
+                            {% if settings.theme == "light" %}
+                                selected
+                            {% endif %}>
+
+                            Light
+
+                        </option>
+
+
+                        <option
+                            value="system"
+                            {% if settings.theme == "system" %}
+                                selected
+                            {% endif %}>
+
+                            System
+
+                        </option>
+
+
+                    </select>
+
+
+                </div>
+
+
+
+                <!-- LANGUAGE -->
+
+                <div class="setting">
+
+
+                    <div class="setting-info">
+
+
+                        <div class="setting-title">
+
+                            Language
+
+                        </div>
+
+
+                        <div class="setting-description">
+
+                            Select your preferred language.
+
+                        </div>
+
+
+                    </div>
+
+
+                    <select name="language">
+
+
+                        <option
+                            value="English"
+                            {% if settings.language == "English" %}
+                                selected
+                            {% endif %}>
+
+                            English
+
+                        </option>
+
+
+                        <option
+                            value="Hindi"
+                            {% if settings.language == "Hindi" %}
+                                selected
+                            {% endif %}>
+
+                            Hindi
+
+                        </option>
+
+
+                    </select>
+
+
+                </div>
+
+
+
+                <!-- MAP VIEW -->
+
+                <div class="setting">
+
+
+                    <div class="setting-info">
+
+
+                        <div class="setting-title">
+
+                            Default Map View
+
+                        </div>
+
+
+                        <div class="setting-description">
+
+                            Choose the default view when opening
+                            infrastructure maps.
+
+                        </div>
+
+
+                    </div>
+
+
+                    <select name="default_map_view">
+
+
+                        <option
+                            value="standard"
+                            {% if settings.default_map_view == "standard" %}
+                                selected
+                            {% endif %}>
+
+                            Standard
+
+                        </option>
+
+
+                        <option
+                            value="satellite"
+                            {% if settings.default_map_view == "satellite" %}
+                                selected
+                            {% endif %}>
+
+                            Satellite
+
+                        </option>
+
+
+                        <option
+                            value="risk"
+                            {% if settings.default_map_view == "risk" %}
+                                selected
+                            {% endif %}>
+
+                            Risk Map
+
+                        </option>
+
+
+                    </select>
+
+
+                </div>
+
+
+            </section>
+
+
+
+            <!-- ==========================
+                 SAVE
+            ========================== -->
+
+            <div class="save-container">
+
+
+                <button
+                    type="submit"
+                    class="save-settings">
+
+                    Save Settings
+
+                </button>
+
+
+            </div>
+
+
+        </form>
+
+
+
+        <!-- ==========================
+             SECURITY
+        ========================== -->
+
+        <section class="settings-card">
+
+
+            <div class="section-header">
+
+
+                <h2>
+
+                    Security & Privacy
+
+                </h2>
+
+
+                <p>
+
+                    Protect your Infra Shield account.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- ACTIVE SESSIONS -->
+
+            <div class="setting">
+
+
+                <div class="setting-info">
+
+
+                    <div class="setting-title">
+
+                        Active Sessions
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Review where your account is currently
+                        signed in.
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="setting-button">
+
+                    Manage Sessions
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- 2FA -->
+
+            <div class="setting">
+
+
+                <div class="setting-info">
+
+
+                    <div class="setting-title">
+
+                        Two-Factor Authentication
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Add an additional layer of security
+                        to your account.
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="setting-button">
+
+                    Coming Soon
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ==========================
+             DANGER ZONE
+        ========================== -->
+
+        <section class="settings-card danger">
+
+
+            <div class="section-header">
+
+
+                <h2 class="danger-title">
+
+                    Danger Zone
+
+                </h2>
+
+
+                <p>
+
+                    Permanent account actions.
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- DELETE ACCOUNT -->
+
+            <div class="setting">
+
+
+                <div class="setting-info">
+
+
+                    <div class="setting-title">
+
+                        Delete Account
+
+                    </div>
+
+
+                    <div class="setting-description">
+
+                        Permanently delete your Infra Shield
+                        account and associated data.
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="danger-button"
+                    onclick="confirmDelete()">
+
+                    Delete Account
+
+                </button>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <div class="footer">
+
+            Infra Shield · Infrastructure Intelligence Platform
+
+        </div>
+
+
+    </main>
+
+</div>
+
+
+
+<script>
+
+
+    /* ==========================
+       DELETE ACCOUNT
+    ========================== */
+
+    function confirmDelete() {
+
+
+        const confirmed = confirm(
+
+            "Are you sure you want to delete your account? " +
+            "This action cannot be undone."
+
+        );
+
+
+        if (confirmed) {
+
+
+            alert(
+
+                "Account deletion will be implemented " +
+                "in the backend."
+
+            );
+
+
+        }
+
+    }
+
+
+</script>
+
+
+</body>
+
+</html>
+
