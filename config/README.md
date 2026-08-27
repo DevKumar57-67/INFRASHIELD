@@ -556,3 +556,6 @@ A formal open-source license will be added before public release.
 > **Predict infrastructure failure. Prevent infrastructure disasters.**
 
 Built with Python, Django, Computer Vision, and AI.
+
+
+Team MINDSYNC
