@@ -1,0 +1,37 @@
+{% load static %}
+<header class="topbar">
+    <div class="topbar-left">
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Toggle sidebar">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+        <a href="{% url 'dashboard' %}" class="brand-mark">
+            <span class="brand-word">Infra</span><span class="brand-accent">Shield</span>
+        </a>
+    </div>
+
+    <div class="topbar-center">
+        {% if page_search_placeholder %}
+            <label class="top-search" aria-label="Search">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="{{ page_search_placeholder }}" />
+            </label>
+        {% endif %}
+    </div>
+
+    <div class="topbar-right">
+        <button type="button" class="icon-button" aria-label="Notifications">
+            <i class="fa-solid fa-bell"></i>
+        </button>
+
+        <a href="{% url 'profile' %}" class="profile-chip" aria-label="Profile">
+            <span class="avatar-badge">{{ request.user.first_name|default:request.user.email|slice:':1'|upper }}</span>
+            <span class="profile-text">
+                <strong>{{ request.user.first_name|default:'User' }}</strong>
+            </span>
+        </a>
+
+        <a href="{% url 'settings' %}" class="icon-button" aria-label="Settings">
+            <i class="fa-solid fa-gear"></i>
+        </a>
+    </div>
+</header>

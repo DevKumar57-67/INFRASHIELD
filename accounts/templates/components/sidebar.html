@@ -1,0 +1,62 @@
+{% with current_name=request.resolver_match.url_name %}
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+        <a href="{% url 'dashboard' %}" class="sidebar-brand">
+            <span class="brand-dot">I</span>
+            <span class="sidebar-brand-text">InfraShield</span>
+        </a>
+        <button type="button" class="sidebar-toggle" id="sidebar-toggle" aria-label="Collapse sidebar">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+    </div>
+
+    <nav class="sidebar-nav" aria-label="Main navigation">
+        <div class="nav-group">
+            <p class="nav-group-title">Main</p>
+            <a href="{% url 'dashboard' %}" class="nav-item {% if current_name == 'dashboard' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-gauge-high"></i></span>
+                <span class="nav-label">Dashboard</span>
+            </a>
+            <a href="{% url 'infrastructure_feed' %}" class="nav-item {% if current_name == 'infrastructure_feed' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-list"></i></span>
+                <span class="nav-label">Infrastructure Feed</span>
+            </a>
+            <a href="{% url 'create_report' %}" class="nav-item {% if current_name == 'create_report' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-circle-plus"></i></span>
+                <span class="nav-label">Report Issue</span>
+            </a>
+            <a href="{% url 'my_reports' %}" class="nav-item {% if current_name == 'my_reports' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-folder-open"></i></span>
+                <span class="nav-label">My Reports</span>
+            </a>
+            <a href="{% url 'risk_map' %}" class="nav-item {% if current_name == 'risk_map' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-map-location-dot"></i></span>
+                <span class="nav-label">Risk Map</span>
+            </a>
+            <a href="{% url 'analytics' %}" class="nav-item {% if current_name == 'analytics' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-chart-line"></i></span>
+                <span class="nav-label">Analytics</span>
+            </a>
+        </div>
+
+        <div class="nav-group account-group">
+            <p class="nav-group-title">Account</p>
+            <a href="{% url 'profile' %}" class="nav-item {% if current_name == 'profile' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-user"></i></span>
+                <span class="nav-label">Profile</span>
+            </a>
+            <a href="{% url 'settings' %}" class="nav-item {% if current_name == 'settings' %}active{% endif %}">
+                <span class="nav-icon"><i class="fa-solid fa-gear"></i></span>
+                <span class="nav-label">Settings</span>
+            </a>
+        </div>
+    </nav>
+
+    <div class="sidebar-footer">
+        <a href="{% url 'logout' %}" class="nav-item logout-item">
+            <span class="nav-icon"><i class="fa-solid fa-right-from-bracket"></i></span>
+            <span class="nav-label">Logout</span>
+        </a>
+    </div>
+</aside>
+{% endwith %}
