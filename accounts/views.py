@@ -6,7 +6,26 @@ from django.contrib import messages
 from .forms import SignupForm, InfrastructureReportForm
 from .forms import SignupForm
 from .forms import SignupForm, InfrastructureReportForm
+from django.shortcuts import render, redirect, get_object_or_404
+from .models import (
+    InfrastructureReport,
+    ReportConfirmation,
+    ReportComment,
+)
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import InfrastructureReport, ReportConfirmation, ReportComment
 
+from .forms import SignupForm
+
+from .models import (
+    InfrastructureReport,
+    ReportConfirmation,
+    ReportComment,
+)
 # ==============================
 # SPLASH PAGE
 # ==============================
@@ -14,7 +33,7 @@ from .forms import SignupForm, InfrastructureReportForm
 def splash(request):
 
     if request.user.is_authenticated:
-        return redirect("dashboard")
+        return redirect("infrastructure_feed")
 
     return render(request, "splash.html")
 
@@ -131,7 +150,7 @@ def login_view(request):
 
         login(request, user)
 
-        return redirect("dashboard")
+        return redirect("infrastructure_feed")
 
     return render(
         request,
@@ -327,9 +346,7 @@ def create_report(request):
                 "Infrastructure report submitted successfully."
             )
 
-            return redirect(
-                "my_reports"
-            )
+            return redirect("infrastructure_feed")
 
     else:
 
@@ -378,6 +395,136 @@ def create_report(request):
         "create_report.html",
         {
             "form": form
+        }
+    )
+
+
+@login_required
+def confirm_report(request, report_id):
+
+    if request.method != "POST":
+        return redirect("infrastructure_feed")
+
+    report = get_object_or_404(
+        InfrastructureReport,
+        id=report_id
+    )
+
+    confirmation, created = ReportConfirmation.objects.get_or_create(
+        report=report,
+        user=request.user
+    )
+
+    if created:
+
+        messages.success(
+            request,
+            "You confirmed this infrastructure issue."
+        )
+
+    else:
+
+        confirmation.delete()
+
+        messages.info(
+            request,
+            "Your confirmation was removed."
+        )
+
+    return redirect(
+        "infrastructure_feed"
+    )
+
+
+@login_required
+def add_comment(request, report_id):
+
+    if request.method != "POST":
+        return redirect("infrastructure_feed")
+
+    report = get_object_or_404(
+        InfrastructureReport,
+        id=report_id
+    )
+
+    content = request.POST.get(
+        "content",
+        ""
+    ).strip()
+
+    if not content:
+
+        messages.error(
+            request,
+            "Comment cannot be empty."
+        )
+
+        return redirect(
+            "infrastructure_feed"
+        )
+
+    if len(content) > 1000:
+
+        messages.error(
+            request,
+            "Comment cannot exceed 1000 characters."
+        )
+
+        return redirect(
+            "infrastructure_feed"
+        )
+
+    ReportComment.objects.create(
+        report=report,
+        user=request.user,
+        content=content
+    )
+
+    messages.success(
+        request,
+        "Comment added successfully."
+    )
+
+    return redirect(
+        "infrastructure_feed"
+    )
+
+
+@login_required
+def infrastructure_feed(request):
+
+    reports = (
+        InfrastructureReport.objects
+        .select_related("user")
+        .prefetch_related(
+            "confirmations",
+            "comments__user"
+        )
+        .order_by("-created_at")
+    )
+
+    return render(
+        request,
+        "infrastructure_feed.html",
+        {
+            "reports": reports
+        }
+    )
+
+@login_required
+def my_reports(request):
+
+    reports = (
+        InfrastructureReport.objects
+        .filter(user=request.user)
+        .order_by("-created_at")
+    )
+
+    return render(
+        request,
+        "my_reports.html",
+        {
+            "reports": reports
         }
     )
 

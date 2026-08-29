@@ -54,6 +54,35 @@ urlpatterns = [
 ),
 
 
+path(
+    "feed/",
+    views.infrastructure_feed,
+    name="infrastructure_feed"
+),
+
+path(
+    "report/<int:report_id>/confirm/",
+    views.confirm_report,
+    name="confirm_report"
+),
+
+path(
+    "report/<int:report_id>/comment/",
+    views.add_comment,
+    name="add_comment"
+),
+
+
+path(
+    "my-reports/",
+    views.my_reports,
+    name="my_reports"
+),
+
+
+
+
+
 
 
 

@@ -1,6 +1,11 @@
+
 from django.db import models
 from django.contrib.auth.models import User
 
+
+# ============================================================
+# INFRASTRUCTURE REPORT
+# ============================================================
 
 class InfrastructureReport(models.Model):
 
@@ -87,9 +92,12 @@ class InfrastructureReport(models.Model):
     )
 
     def __str__(self):
-
         return f"{self.title} - {self.infrastructure_type}"
 
+
+# ============================================================
+# USER PROFILE
+# ============================================================
 
 class Profile(models.Model):
 
@@ -131,6 +139,10 @@ class Profile(models.Model):
     def __str__(self):
         return self.user.username
 
+
+# ============================================================
+# USER SETTINGS
+# ============================================================
 
 class UserSettings(models.Model):
 
@@ -176,5 +188,74 @@ class UserSettings(models.Model):
     )
 
     def __str__(self):
-
         return f"{self.user.username} Settings"
+
+
+# ============================================================
+# REPORT CONFIRMATION
+# ============================================================
+
+class ReportConfirmation(models.Model):
+
+    report = models.ForeignKey(
+        InfrastructureReport,
+        on_delete=models.CASCADE,
+        related_name="confirmations"
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="report_confirmations"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+
+        constraints = [
+            models.UniqueConstraint(
+                fields=["report", "user"],
+                name="unique_report_confirmation"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} confirmed {self.report.title}"
+
+
+# ============================================================
+# REPORT COMMENT
+# ============================================================
+
+class ReportComment(models.Model):
+
+    report = models.ForeignKey(
+        InfrastructureReport,
+        on_delete=models.CASCADE,
+        related_name="comments"
+    )
+
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name="report_comments"
+    )
+
+    content = models.TextField(
+        max_length=1000
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    updated_at = models.DateTimeField(
+        auto_now=True
+    )
+
+    def __str__(self):
+        return f"{self.user.username} - {self.report.title}"
+

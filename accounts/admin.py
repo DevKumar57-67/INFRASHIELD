@@ -1,6 +1,11 @@
 from django.contrib import admin
 from .models import InfrastructureReport, Profile
 from .models import InfrastructureReport, Profile, UserSettings
+from .models import (
+    InfrastructureReport,
+    ReportConfirmation,
+    ReportComment,
+)
 
 @admin.register(InfrastructureReport)
 class InfrastructureReportAdmin(admin.ModelAdmin):
@@ -58,3 +63,44 @@ class UserSettingsAdmin(admin.ModelAdmin):
         "user__username",
         "user__email",
     )
+
+
+@admin.register(ReportConfirmation)
+class ReportConfirmationAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "report",
+        "user",
+        "created_at",
+    )
+
+    search_fields = (
+        "report__title",
+        "user__username",
+    )
+
+    list_filter = (
+        "created_at",
+    )
+
+
+@admin.register(ReportComment)
+class ReportCommentAdmin(admin.ModelAdmin):
+
+    list_display = (
+        "report",
+        "user",
+        "content",
+        "created_at",
+    )
+
+    search_fields = (
+        "report__title",
+        "user__username",
+        "content",
+    )
+
+    list_filter = (
+        "created_at",
+    )
+

@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Reports | InfraShield</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #080808;
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 30px;
+        }
+
+        .report {
+            background: #111;
+            border: 1px solid #292929;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .report h2 {
+            margin-bottom: 10px;
+        }
+
+        .location {
+            color: #888;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            color: #bbb;
+            line-height: 1.6;
+        }
+
+        .risk {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 6px 10px;
+            border-radius: 20px;
+            background: #222;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 30px;
+            color: white;
+            text-decoration: none;
+        }
+
+        .empty {
+            border: 1px dashed #333;
+            padding: 60px 20px;
+            text-align: center;
+            border-radius: 12px;
+            color: #777;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="{% url 'infrastructure_feed' %}" class="back">
+        ← Back to Feed
+    </a>
+
+    <h1>My Reports</h1>
+
+    <p class="subtitle">
+        Infrastructure issues you have reported.
+    </p>
+
+
+    {% if reports %}
+
+        {% for report in reports %}
+
+            <div class="report">
+
+                <h2>
+                    {{ report.title }}
+                </h2>
+
+                <div class="location">
+                    📍 {{ report.location }}
+                </div>
+
+                {% if report.description %}
+
+                    <div class="description">
+                        {{ report.description }}
+                    </div>
+
+                {% endif %}
+
+                <div class="risk">
+                    {{ report.get_risk_level_display }}
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>No reports yet</h2>
+
+            <p>
+                You haven't reported any infrastructure
+                issues yet.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+
+</html>
+
