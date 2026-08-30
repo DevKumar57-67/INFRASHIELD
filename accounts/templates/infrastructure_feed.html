@@ -1,16 +1,29 @@
 
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
 
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Infrastructure Feed | InfraShield</title>
+    <title>Infrastructure Feed | Infra Shield</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
+
+        /* =========================================================
+           GLOBAL
+        ========================================================= */
 
         * {
             margin: 0;
@@ -19,238 +32,566 @@
         }
 
         body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #080808;
+            font-family: 'Inter', sans-serif;
+            background: #050505;
             color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* =========================================================
+           APP
+        ========================================================= */
+
+        .app {
+            display: flex;
             min-height: 100vh;
         }
 
-        /* =====================================================
-           NAVBAR
-        ===================================================== */
 
-        .navbar {
-            height: 70px;
-            border-bottom: 1px solid #242424;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 35px;
-            position: sticky;
+        /* =========================================================
+           SIDEBAR
+           IDENTICAL TO DASHBOARD
+        ========================================================= */
+
+        .sidebar {
+            width: 250px;
+            background: #090909;
+            border-right: 1px solid #1c1c1c;
+
+            position: fixed;
             top: 0;
-            background: rgba(8, 8, 8, 0.95);
-            backdrop-filter: blur(10px);
+            bottom: 0;
+            left: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 25px 15px;
+
             z-index: 100;
+
+            transition: width 0.25s ease,
+                        transform 0.25s ease;
         }
 
+
+        /* LOGO */
+
         .logo {
-            font-size: 22px;
+            padding: 5px 12px 30px;
+
+            font-size: 21px;
             font-weight: 800;
-            letter-spacing: -0.5px;
+
+            letter-spacing: -1px;
         }
 
         .logo span {
-            color: #999999;
+            color: #4da3ff;
         }
 
-        .nav-right {
+
+        /* SIDEBAR SECTION */
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            color: #555;
+
+            padding: 0 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* NAV ITEM */
+
+        .nav-item {
             display: flex;
             align-items: center;
-            gap: 18px;
-        }
 
-        .nav-link {
-            color: #bdbdbd;
-            text-decoration: none;
-            font-size: 14px;
-        }
+            gap: 13px;
 
-        .nav-link:hover {
-            color: white;
-        }
+            padding: 11px 12px;
 
-        .user-avatar {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            background: #ffffff;
-            color: #000000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
+            margin-bottom: 3px;
 
+            border-radius: 9px;
 
-        /* =====================================================
-           LAYOUT
-        ===================================================== */
+            color: #858585;
 
-        .layout {
-            display: flex;
-            min-height: calc(100vh - 70px);
-        }
+            font-size: 13px;
+            font-weight: 500;
 
-
-        /* =====================================================
-           SIDEBAR
-        ===================================================== */
-
-        .sidebar {
-            width: 240px;
-            border-right: 1px solid #242424;
-            padding: 28px 16px;
-            position: fixed;
-            top: 70px;
-            bottom: 0;
-            background: #080808;
-        }
-
-        .sidebar-title {
-            color: #666666;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin: 0 12px 15px;
-        }
-
-        .sidebar a {
-            display: block;
-            padding: 12px 14px;
-            margin-bottom: 5px;
-            border-radius: 8px;
-            text-decoration: none;
-            color: #9b9b9b;
-            font-size: 14px;
             transition: 0.2s;
         }
 
-        .sidebar a:hover {
+        .nav-item:hover {
+            background: #141414;
+            color: white;
+        }
+
+        .nav-item.active {
             background: #151515;
             color: white;
         }
 
-        .sidebar a.active {
-            background: #ffffff;
-            color: #000000;
+        .nav-icon {
+            width: 18px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            flex-shrink: 0;
+        }
+
+
+        /* SIDEBAR BOTTOM */
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+            margin-left: 250px;
+
+            width: calc(100% - 250px);
+
+            min-height: 100vh;
+
+            background: #050505;
+
+            transition: margin-left 0.25s ease,
+                        width 0.25s ease;
+        }
+
+
+        /* =========================================================
+           TOPBAR
+        ========================================================= */
+
+        .topbar {
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 32px;
+
+            border-bottom: 1px solid #1b1b1b;
+
+            background: rgba(5, 5, 5, 0.92);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 50;
+        }
+
+
+        /* SEARCH */
+
+        .search-container {
+            width: 420px;
+
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #555;
+
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+
+            background: #101010;
+
+            border: 1px solid #242424;
+
+            border-radius: 9px;
+
+            padding: 12px 15px 12px 40px;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #3a3a3a;
+        }
+
+        .search-input::placeholder {
+            color: #555;
+        }
+
+
+        /* TOP RIGHT */
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 18px;
+        }
+
+        .top-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #101010;
+
+            border: 1px solid #222;
+
+            color: #777;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .top-icon:hover {
+            color: white;
+            border-color: #444;
+        }
+
+
+        /* =========================================================
+           PROFILE
+        ========================================================= */
+
+        .profile {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            background: #1c1c1c;
+
+            border: 1px solid #333;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            overflow: hidden;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
+        }
+
+        .profile-info {
+            line-height: 1.3;
+        }
+
+        .profile-name {
+            font-size: 12px;
             font-weight: 600;
         }
 
-
-        /* =====================================================
-           MAIN CONTENT
-        ===================================================== */
-
-        .main {
-            margin-left: 240px;
-            width: calc(100% - 240px);
-            padding: 45px 50px;
+        .profile-role {
+            font-size: 10px;
+            color: #666;
         }
 
+
+        /* =========================================================
+           MENU BUTTON
+        ========================================================= */
+
+        .menu-btn {
+            display: none;
+
+            width: 35px;
+            height: 35px;
+
+            border: 1px solid #252525;
+
+            background: #101010;
+
+            color: white;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            align-items: center;
+            justify-content: center;
+
+            flex-shrink: 0;
+        }
+
+
+        /* =========================================================
+           CONTENT
+        ========================================================= */
+
+        .content {
+            padding: 35px 32px 0;
+        }
+
+
+        /* =========================================================
+           PAGE HEADER
+        ========================================================= */
+
         .page-header {
-            max-width: 850px;
-            margin: auto;
+            margin-bottom: 30px;
+        }
+
+        .page-label {
+            color: #4da3ff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            margin-bottom: 9px;
         }
 
         .page-header h1 {
-            font-size: 34px;
-            letter-spacing: -1px;
+            font-size: 32px;
+
+            letter-spacing: -1.5px;
+
             margin-bottom: 8px;
         }
 
         .page-header p {
-            color: #777777;
-            font-size: 15px;
-            margin-bottom: 30px;
+            color: #666;
+
+            font-size: 13px;
+
+            line-height: 1.5;
         }
 
 
-        /* =====================================================
+        /* =========================================================
            CREATE REPORT BUTTON
-        ===================================================== */
+        ========================================================= */
 
         .create-report {
             display: inline-flex;
+
             align-items: center;
+
             gap: 8px;
+
             background: white;
+
             color: black;
+
             text-decoration: none;
-            padding: 12px 18px;
+
+            padding: 11px 16px;
+
             border-radius: 8px;
-            font-size: 14px;
+
+            font-size: 12px;
+
             font-weight: 700;
-            margin-bottom: 30px;
+
+            margin-top: 18px;
+
+            transition: 0.2s;
         }
 
         .create-report:hover {
             background: #dddddd;
+            transform: translateY(-1px);
         }
 
 
-        /* =====================================================
-           REPORT CARD
-        ===================================================== */
+        /* =========================================================
+           FEED
+        ========================================================= */
 
         .feed {
-            max-width: 850px;
-            margin: auto;
+            max-width: 100%;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 20px;
         }
 
+
+        /* =========================================================
+           REPORT CARD
+           DASHBOARD PANEL STYLE
+        ========================================================= */
+
         .report-card {
-            border: 1px solid #242424;
-            background: #0d0d0d;
+            background: #0b0b0b;
+
+            border: 1px solid #202020;
+
             border-radius: 14px;
+
             overflow: hidden;
-            margin-bottom: 25px;
+
+            transition: 0.2s;
         }
+
+        .report-card:hover {
+            border-color: #303030;
+        }
+
+
+        /* =========================================================
+           REPORT HEADER
+        ========================================================= */
 
         .report-header {
             padding: 18px 20px;
+
             display: flex;
+
             justify-content: space-between;
+
             align-items: center;
+
+            border-bottom: 1px solid #1c1c1c;
         }
 
         .report-user {
             display: flex;
+
             align-items: center;
+
             gap: 10px;
         }
+
+
+        /* REPORT AVATAR */
 
         .small-avatar {
             width: 34px;
             height: 34px;
-            background: #222222;
+
+            background: #151515;
+
+            border: 1px solid #292929;
+
             border-radius: 50%;
+
             display: flex;
+
             align-items: center;
             justify-content: center;
-            font-size: 13px;
-            font-weight: bold;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+        }
+
+        .small-avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+
+            display: block;
         }
 
         .username {
-            font-size: 14px;
+            font-size: 12px;
+
             font-weight: 600;
+
+            margin-bottom: 4px;
         }
 
         .report-date {
-            color: #666666;
-            font-size: 12px;
-            margin-top: 3px;
+            color: #555;
+
+            font-size: 10px;
         }
 
 
-        /* =====================================================
+        /* =========================================================
            RISK BADGES
-        ===================================================== */
+        ========================================================= */
 
         .risk {
-            font-size: 11px;
+            font-size: 9px;
+
             font-weight: 700;
-            padding: 6px 10px;
-            border-radius: 20px;
+
+            padding: 5px 8px;
+
+            border-radius: 5px;
+
             text-transform: uppercase;
         }
 
@@ -260,118 +601,161 @@
         }
 
         .risk.low {
-            background: #122312;
-            color: #79d279;
+            background: #16251a;
+            color: #65b978;
         }
 
         .risk.medium {
-            background: #29250f;
-            color: #d8bd52;
+            background: #2b2615;
+            color: #e5bb4a;
         }
 
         .risk.high {
-            background: #2b180e;
-            color: #e88d54;
+            background: #2b1717;
+            color: #ff6666;
         }
 
         .risk.critical {
             background: #2b1010;
-            color: #ff6666;
+            color: #ff4d4d;
         }
 
 
-        /* =====================================================
+        /* =========================================================
            REPORT IMAGE
-        ===================================================== */
+        ========================================================= */
 
         .report-image {
             width: 100%;
+
             max-height: 470px;
+
             object-fit: cover;
+
             display: block;
+
+            border-bottom: 1px solid #1c1c1c;
         }
 
 
-        /* =====================================================
+        /* =========================================================
            REPORT CONTENT
-        ===================================================== */
+        ========================================================= */
 
         .report-content {
             padding: 20px;
         }
 
         .report-title {
-            font-size: 21px;
+            font-size: 19px;
+
             font-weight: 700;
-            margin-bottom: 8px;
+
+            letter-spacing: -0.5px;
+
+            margin-bottom: 7px;
         }
 
         .report-location {
-            color: #8c8c8c;
-            font-size: 13px;
+            color: #666;
+
+            font-size: 11px;
+
             margin-bottom: 15px;
         }
 
         .report-description {
-            color: #c0c0c0;
+            color: #888;
+
             line-height: 1.6;
-            font-size: 14px;
+
+            font-size: 12px;
         }
+
+
+        /* =========================================================
+           META
+        ========================================================= */
 
         .report-meta {
             display: flex;
-            gap: 10px;
+
+            gap: 8px;
+
             margin-top: 18px;
+
             flex-wrap: wrap;
         }
 
         .meta-tag {
-            background: #181818;
-            border: 1px solid #292929;
-            padding: 6px 10px;
+            background: #151515;
+
+            border: 1px solid #252525;
+
+            padding: 6px 9px;
+
             border-radius: 6px;
-            color: #a9a9a9;
-            font-size: 11px;
+
+            color: #777;
+
+            font-size: 9px;
         }
 
 
-        /* =====================================================
+        /* =========================================================
            AI SECTION
-        ===================================================== */
+        ========================================================= */
 
         .ai-box {
             margin-top: 18px;
+
             padding: 14px;
+
             border: 1px solid #252525;
-            background: #111111;
-            border-radius: 8px;
+
+            background: #101010;
+
+            border-radius: 9px;
+
+            border-left: 2px solid #4da3ff;
         }
 
         .ai-title {
-            font-size: 11px;
+            font-size: 10px;
+
             text-transform: uppercase;
+
             letter-spacing: 1px;
+
             color: #ffffff;
+
             font-weight: 700;
+
             margin-bottom: 7px;
         }
 
         .ai-text {
-            color: #858585;
-            font-size: 13px;
+            color: #666;
+
+            font-size: 11px;
+
             line-height: 1.5;
         }
 
 
-        /* =====================================================
+        /* =========================================================
            ACTION BAR
-        ===================================================== */
+        ========================================================= */
 
         .action-bar {
-            border-top: 1px solid #242424;
+            border-top: 1px solid #1c1c1c;
+
             padding: 14px 20px;
+
             display: flex;
+
             align-items: center;
+
             gap: 20px;
         }
 
@@ -381,11 +765,18 @@
 
         .action-button {
             background: transparent;
+
             border: none;
-            color: #9a9a9a;
+
+            color: #777;
+
             cursor: pointer;
-            font-size: 13px;
+
+            font-size: 11px;
+
             padding: 0;
+
+            transition: 0.2s;
         }
 
         .action-button:hover {
@@ -393,18 +784,22 @@
         }
 
         .confirmation-count {
-            color: #666666;
-            font-size: 12px;
+            color: #555;
+
+            font-size: 10px;
         }
 
 
-        /* =====================================================
+        /* =========================================================
            COMMENTS
-        ===================================================== */
+        ========================================================= */
 
         .comments {
-            border-top: 1px solid #1d1d1d;
+            border-top: 1px solid #1c1c1c;
+
             padding: 16px 20px;
+
+            background: #090909;
         }
 
         .comment {
@@ -412,96 +807,290 @@
         }
 
         .comment-user {
-            font-size: 12px;
+            font-size: 11px;
+
             font-weight: 700;
+
             margin-bottom: 4px;
         }
 
         .comment-text {
-            color: #999999;
-            font-size: 13px;
+            color: #777;
+
+            font-size: 11px;
+
             line-height: 1.5;
         }
 
         .comment-form {
             display: flex;
+
             gap: 10px;
+
             margin-top: 15px;
         }
 
         .comment-input {
             flex: 1;
+
             background: #151515;
+
             border: 1px solid #292929;
+
             border-radius: 7px;
+
             padding: 10px 12px;
+
             color: white;
+
             outline: none;
+
+            font-size: 11px;
         }
 
         .comment-input:focus {
             border-color: #555555;
         }
 
+        .comment-input::placeholder {
+            color: #555;
+        }
+
         .comment-submit {
             background: white;
+
             color: black;
+
             border: none;
+
             border-radius: 7px;
+
             padding: 0 15px;
+
+            font-size: 11px;
+
             font-weight: 700;
+
             cursor: pointer;
         }
 
+        .comment-submit:hover {
+            background: #dddddd;
+        }
 
-        /* =====================================================
+
+        /* =========================================================
            EMPTY STATE
-        ===================================================== */
+        ========================================================= */
 
         .empty-state {
             text-align: center;
+
             padding: 80px 20px;
+
             border: 1px dashed #292929;
+
             border-radius: 12px;
+
+            background: #0b0b0b;
         }
 
         .empty-state h2 {
             font-size: 20px;
+
             margin-bottom: 8px;
         }
 
         .empty-state p {
-            color: #666666;
+            color: #666;
+
+            font-size: 12px;
+
             margin-bottom: 20px;
         }
 
 
-        /* =====================================================
-           MOBILE
-        ===================================================== */
+        /* =========================================================
+           TEAM BANNER
+           SAME AS SPLASH PAGE
+        ========================================================= */
+
+        .team-banner {
+            max-width: 1150px;
+
+            margin: 0 auto;
+
+            padding: 35px 30px 30px;
+        }
+
+        .team-banner-inner {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            padding: 14px 20px;
+
+            border: 1px solid #1e1e1e;
+
+            background: #0b0b0b;
+
+            border-radius: 10px;
+
+            color: #777;
+
+            font-size: 12px;
+
+            letter-spacing: 1.5px;
+
+            text-transform: uppercase;
+
+            text-align: center;
+
+            flex-wrap: wrap;
+        }
+
+        .team-banner-inner span {
+            color: #4da3ff;
+
+            font-weight: 800;
+
+            letter-spacing: 1px;
+        }
+
+
+        /* =========================================================
+           MOBILE SIDEBAR OVERLAY
+        ========================================================= */
+
+        .sidebar-overlay {
+            display: none;
+
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, 0.65);
+
+            z-index: 90;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .search-container {
+                width: 300px;
+            }
+
+        }
+
 
         @media (max-width: 800px) {
 
             .sidebar {
-                display: none;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
             }
 
             .main {
                 margin-left: 0;
+
                 width: 100%;
-                padding: 30px 15px;
             }
 
-            .navbar {
+            .menu-btn {
+                display: flex;
+            }
+
+            .topbar {
                 padding: 0 18px;
+
+                gap: 12px;
             }
 
-            .nav-link {
+            .search-container {
+                flex: 1;
+
+                width: auto;
+            }
+
+            .profile-info {
                 display: none;
+            }
+
+            .content {
+                padding: 25px 18px 0;
             }
 
             .page-header h1 {
                 font-size: 28px;
+            }
+
+            .team-banner {
+                padding: 0 22px 25px;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .top-actions {
+                gap: 6px;
+            }
+
+            .top-icon {
+                display: none;
+            }
+
+            .page-header h1 {
+                font-size: 25px;
+            }
+
+            .report-header {
+                padding: 15px;
+            }
+
+            .report-content {
+                padding: 16px;
+            }
+
+            .action-bar {
+                padding: 13px 16px;
+            }
+
+            .comments {
+                padding: 15px 16px;
+            }
+
+            .comment-form {
+                flex-direction: column;
+            }
+
+            .comment-submit {
+                min-height: 36px;
+            }
+
+            .team-banner-inner {
+                font-size: 10px;
+
+                padding: 12px 14px;
+
+                line-height: 1.7;
             }
 
         }
@@ -514,422 +1103,781 @@
 <body>
 
 
-<!-- ==========================================================
-     NAVBAR
-=========================================================== -->
+<div class="app">
 
-<header class="navbar">
 
-    <div class="logo">
-        Infra<span>Shield</span>
-    </div>
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
 
-    <div class="nav-right">
+    <aside class="sidebar" id="sidebar">
 
-        <a href="{% url 'profile' %}" class="nav-link">
-            Profile
-        </a>
-
-        <a href="{% url 'settings' %}" class="nav-link">
-            Settings
-        </a>
-
-        <div class="user-avatar">
-            {{ request.user.first_name|first|upper }}
+        <div class="logo">
+            INFRA<span>SHIELD</span>
         </div>
 
-    </div>
 
-</header>
+        <div class="sidebar-section">
 
-
-
-<!-- ==========================================================
-     PAGE LAYOUT
-=========================================================== -->
-
-<div class="layout">
+            <div class="section-title">
+                OVERVIEW
+            </div>
 
 
-    <!-- SIDEBAR -->
+            <a href="{% url 'dashboard' %}"
+               class="nav-item">
 
-    <aside class="sidebar">
+                <span class="nav-icon">⌂</span>
 
-        <div class="sidebar-title">
-            InfraShield
-        </div>
+                Dashboard
 
-        <a href="{% url 'dashboard' %}">
-            Dashboard
-        </a>
-
-        <a href="{% url 'create_report' %}">
-            Report Issue
-        </a>
-
-        <a href="{% url 'infrastructure_feed' %}"
-           class="active">
-            Infrastructure Feed
-        </a>
-
-        <a href="{% url 'my_reports' %}">
-            My Reports
-        </a>
-
-        <a href="#">
-            Risk Map
-        </a>
-
-        <a href="#">
-            Analytics
-        </a>
-
-        <div class="sidebar-title" style="margin-top: 30px;">
-            Account
-        </div>
-
-        <a href="{% url 'profile' %}">
-            Profile
-        </a>
-
-        <a href="{% url 'settings' %}">
-            Settings
-        </a>
-
-        <a href="{% url 'logout' %}">
-            Logout
-        </a>
-
-    </aside>
+            </a>
 
 
+            <a href="{% url 'infrastructure_feed' %}"
+               class="nav-item active">
 
-    <!-- MAIN CONTENT -->
+                <span class="nav-icon">◉</span>
 
-    <main class="main">
-
-        <div class="page-header">
-
-            <h1>
                 Infrastructure Feed
-            </h1>
 
-            <p>
-                Discover, verify and discuss infrastructure
-                issues reported across India.
-            </p>
+            </a>
+
 
             <a href="{% url 'create_report' %}"
-               class="create-report">
+               class="nav-item">
 
-                + Report Infrastructure Issue
+                <span class="nav-icon">+</span>
+
+                Report Issue
 
             </a>
 
         </div>
 
 
+        <div class="sidebar-section">
 
-        <!-- FEED -->
-
-        <section class="feed">
-
-
-            {% if reports %}
+            <div class="section-title">
+                INTELLIGENCE
+            </div>
 
 
-                {% for report in reports %}
+            <a href="#"
+               class="nav-item">
 
-                    <article class="report-card">
+                <span class="nav-icon">✦</span>
 
+                AI Analysis
 
-                        <!-- REPORT HEADER -->
-
-                        <div class="report-header">
-
-                            <div class="report-user">
-
-                                <div class="small-avatar">
-
-                                    {{ report.user.first_name|first|upper }}
-
-                                </div>
-
-                                <div>
-
-                                    <div class="username">
-
-                                        {% if report.user.get_full_name %}
-
-                                            {{ report.user.get_full_name }}
-
-                                        {% else %}
-
-                                            {{ report.user.username }}
-
-                                        {% endif %}
-
-                                    </div>
-
-                                    <div class="report-date">
-
-                                        {{ report.created_at|date:"d M Y, H:i" }}
-
-                                    </div>
-
-                                </div>
-
-                            </div>
+            </a>
 
 
-                            <div class="risk {{ report.risk_level }}">
+            <a href="#"
+               class="nav-item">
 
-                                {{ report.get_risk_level_display }}
+                <span class="nav-icon">▥</span>
 
-                            </div>
+                Analytics
+
+            </a>
+
+
+            <a href="{% url 'my_reports' %}"
+               class="nav-item">
+
+                <span class="nav-icon">◷</span>
+
+                Report History
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="section-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="{% url 'profile' %}"
+               class="nav-item">
+
+                <span class="nav-icon">♙</span>
+
+                Profile
+
+            </a>
+
+
+            <a href="{% url 'settings' %}"
+               class="nav-item">
+
+                <span class="nav-icon">⚙</span>
+
+                Settings
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'logout' %}"
+               class="nav-item">
+
+                <span class="nav-icon">↪</span>
+
+                Logout
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MOBILE OVERLAY -->
+
+    <div
+        class="sidebar-overlay"
+        id="sidebarOverlay"
+        onclick="toggleSidebar()">
+    </div>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             TOPBAR
+        ================================================== -->
+
+        <header class="topbar">
+
+
+            <button
+                class="menu-btn"
+                onclick="toggleSidebar()"
+                aria-label="Toggle sidebar">
+
+                ☰
+
+            </button>
+
+
+            <div class="search-container">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    class="search-input"
+                    id="locationSearch"
+                    placeholder="Search city, road, bridge or location..."
+                >
+
+            </div>
+
+
+            <div class="top-actions">
+
+
+                <button class="top-icon">
+                    ?
+                </button>
+
+
+                <button class="top-icon">
+                    ♧
+                </button>
+
+
+                <!-- DYNAMIC PROFILE -->
+
+                <a
+                    href="{% url 'profile' %}"
+                    class="profile"
+                >
+
+                    <div class="avatar">
+
+                        {% if request.user.profile.profile_picture %}
+
+                            <img
+                                src="{{ request.user.profile.profile_picture.url }}"
+                                alt="{{ request.user.first_name }}"
+                            >
+
+                        {% else %}
+
+                            {{ request.user.first_name|first|upper }}
+
+                        {% endif %}
+
+                    </div>
+
+
+                    <div class="profile-info">
+
+                        <div class="profile-name">
+
+                            {{ request.user.first_name }}
 
                         </div>
 
 
+                        <div class="profile-role">
 
-                        <!-- IMAGE -->
+                            {{ request.user.bio }}
 
-                        {% if report.image %}
+                        </div>
 
-                            <img
-                                src="{{ report.image.url }}"
-                                alt="{{ report.title }}"
-                                class="report-image"
-                            >
+                    </div>
 
-                        {% endif %}
+                </a>
 
+            </div>
 
-
-                        <!-- CONTENT -->
-
-                        <div class="report-content">
-
-                            <div class="report-title">
-
-                                {{ report.title }}
-
-                            </div>
+        </header>
 
 
-                            <div class="report-location">
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
 
-                                📍 {{ report.location }}
-
-                            </div>
+        <section class="content">
 
 
-                            {% if report.description %}
+            <!-- PAGE HEADER -->
 
-                                <div class="report-description">
+            <div class="page-header">
 
-                                    {{ report.description }}
+                <div class="page-label">
+                    CITIZEN INFRASTRUCTURE INTELLIGENCE
+                </div>
+
+
+                <h1>
+                    Infrastructure Feed
+                </h1>
+
+
+                <p>
+                    Discover, verify and discuss infrastructure
+                    issues reported across India.
+                </p>
+
+
+                <a
+                    href="{% url 'create_report' %}"
+                    class="create-report"
+                >
+
+                    + Report Infrastructure Issue
+
+                </a>
+
+            </div>
+
+
+            <!-- =================================================
+                 FEED
+            ================================================== -->
+
+            <section class="feed">
+
+
+                {% if reports %}
+
+
+                    {% for report in reports %}
+
+
+                        <article class="report-card">
+
+
+                            <!-- REPORT HEADER -->
+
+                            <div class="report-header">
+
+
+                                <div class="report-user">
+
+
+                                    <div class="small-avatar">
+
+
+                                        {% if report.user.profile.profile_picture %}
+
+                                            <img
+                                                src="{{ report.user.profile.profile_picture.url }}"
+                                                alt="{{ report.user.get_full_name }}"
+                                            >
+
+                                        {% else %}
+
+                                            {{ report.user.first_name|first|upper }}
+
+                                        {% endif %}
+
+
+                                    </div>
+
+
+                                    <div>
+
+
+                                        <div class="username">
+
+                                            {% if report.user.get_full_name %}
+
+                                                {{ report.user.get_full_name }}
+
+                                            {% else %}
+
+                                                {{ report.user.username }}
+
+                                            {% endif %}
+
+                                        </div>
+
+
+                                        <div class="report-date">
+
+                                            {{ report.created_at|date:"d M Y, H:i" }}
+
+                                        </div>
+
+
+                                    </div>
 
                                 </div>
+
+
+                                <div class="risk {{ report.risk_level }}">
+
+                                    {{ report.get_risk_level_display }}
+
+                                </div>
+
+
+                            </div>
+
+
+                            <!-- REPORT IMAGE -->
+
+                            {% if report.image %}
+
+                                <img
+                                    src="{{ report.image.url }}"
+                                    alt="{{ report.title }}"
+                                    class="report-image"
+                                >
 
                             {% endif %}
 
 
-                            <div class="report-meta">
+                            <!-- REPORT CONTENT -->
 
-                                <span class="meta-tag">
+                            <div class="report-content">
 
-                                    {{ report.get_infrastructure_type_display }}
+
+                                <div class="report-title">
+
+                                    {{ report.title }}
+
+                                </div>
+
+
+                                <div class="report-location">
+
+                                    📍 {{ report.location }}
+
+                                </div>
+
+
+                                {% if report.description %}
+
+                                    <div class="report-description">
+
+                                        {{ report.description }}
+
+                                    </div>
+
+                                {% endif %}
+
+
+                                <div class="report-meta">
+
+
+                                    <span class="meta-tag">
+
+                                        {{ report.get_infrastructure_type_display }}
+
+                                    </span>
+
+
+                                    {% if report.latitude and report.longitude %}
+
+                                        <span class="meta-tag">
+
+                                            {{ report.latitude }},
+                                            {{ report.longitude }}
+
+                                        </span>
+
+                                    {% endif %}
+
+
+                                </div>
+
+
+                                <!-- AI ANALYSIS -->
+
+                                {% if report.ai_analysis %}
+
+                                    <div class="ai-box">
+
+                                        <div class="ai-title">
+
+                                            AI Analysis
+
+                                        </div>
+
+
+                                        <div class="ai-text">
+
+                                            {{ report.ai_analysis }}
+
+                                        </div>
+
+                                    </div>
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                            <!-- ACTION BAR -->
+
+                            <div class="action-bar">
+
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'confirm_report' report.id %}"
+                                    class="action-form"
+                                >
+
+                                    {% csrf_token %}
+
+
+                                    <button
+                                        type="submit"
+                                        class="action-button"
+                                    >
+
+                                        ✓ Confirm Issue
+
+                                    </button>
+
+                                </form>
+
+
+                                <span class="confirmation-count">
+
+                                    {{ report.confirmations.count }}
+
+                                    citizen{{ report.confirmations.count|pluralize }}
+
+                                    confirmed
 
                                 </span>
 
 
-                                {% if report.latitude and report.longitude %}
+                            </div>
 
-                                    <span class="meta-tag">
 
-                                        {{ report.latitude }},
-                                        {{ report.longitude }}
+                            <!-- COMMENTS -->
 
-                                    </span>
+                            <div class="comments">
 
-                                {% endif %}
+
+                                {% for comment in report.comments.all %}
+
+
+                                    <div class="comment">
+
+
+                                        <div class="comment-user">
+
+                                            {{ comment.user.get_full_name|default:comment.user.username }}
+
+                                        </div>
+
+
+                                        <div class="comment-text">
+
+                                            {{ comment.content }}
+
+                                        </div>
+
+
+                                    </div>
+
+
+                                {% empty %}
+
+
+                                    <div class="comment-text">
+
+                                        No comments yet.
+
+                                    </div>
+
+
+                                {% endfor %}
+
+
+                                <!-- ADD COMMENT -->
+
+                                <form
+                                    method="POST"
+                                    action="{% url 'add_comment' report.id %}"
+                                    class="comment-form"
+                                >
+
+                                    {% csrf_token %}
+
+
+                                    <input
+                                        type="text"
+                                        name="content"
+                                        class="comment-input"
+                                        placeholder="Add your observation..."
+                                        maxlength="1000"
+                                        required
+                                    >
+
+
+                                    <button
+                                        type="submit"
+                                        class="comment-submit"
+                                    >
+
+                                        Post
+
+                                    </button>
+
+                                </form>
+
 
                             </div>
 
 
+                        </article>
 
-                            <!-- AI ANALYSIS -->
 
-                            {% if report.ai_analysis %}
+                    {% endfor %}
 
-                                <div class="ai-box">
 
-                                    <div class="ai-title">
+                {% else %}
 
-                                        AI Analysis
 
-                                    </div>
+                    <!-- EMPTY STATE -->
 
-                                    <div class="ai-text">
+                    <div class="empty-state">
 
-                                        {{ report.ai_analysis }}
 
-                                    </div>
+                        <h2>
+                            No infrastructure reports yet
+                        </h2>
 
-                                </div>
 
-                            {% endif %}
+                        <p>
+                            Be the first person to report an
+                            infrastructure issue in your area.
+                        </p>
 
-                        </div>
 
+                        <a
+                            href="{% url 'create_report' %}"
+                            class="create-report"
+                        >
 
+                            Report an Issue
 
-                        <!-- ACTION BAR -->
+                        </a>
 
-                        <div class="action-bar">
 
+                    </div>
 
-                            <form
-                                method="POST"
-                                action="{% url 'confirm_report' report.id %}"
-                                class="action-form"
-                            >
 
-                                {% csrf_token %}
+                {% endif %}
 
-                                <button
-                                    type="submit"
-                                    class="action-button"
-                                >
 
-                                    ✓ Confirm Issue
+            </section>
 
-                                </button>
 
-                            </form>
+            <!-- =================================================
+                 TEAM BANNER
+                 SAME AS SPLASH PAGE
+            ================================================== -->
 
+            <footer class="team-banner">
 
-                            <span class="confirmation-count">
+                <div class="team-banner-inner">
 
-                                {{ report.confirmations.count }}
-                                citizen{{ report.confirmations.count|pluralize }}
-                                confirmed
+                    Built with purpose for safer infrastructure
 
-                            </span>
+                    <span>
+                        · TEAM MINDSINQ ·
+                    </span>
 
-                        </div>
-
-
-
-                        <!-- COMMENTS -->
-
-                        <div class="comments">
-
-
-                            {% for comment in report.comments.all %}
-
-                                <div class="comment">
-
-                                    <div class="comment-user">
-
-                                        {{ comment.user.get_full_name|default:comment.user.username }}
-
-                                    </div>
-
-                                    <div class="comment-text">
-
-                                        {{ comment.content }}
-
-                                    </div>
-
-                                </div>
-
-                            {% empty %}
-
-                                <div class="comment-text">
-
-                                    No comments yet.
-
-                                </div>
-
-                            {% endfor %}
-
-
-
-                            <!-- ADD COMMENT -->
-
-                            <form
-                                method="POST"
-                                action="{% url 'add_comment' report.id %}"
-                                class="comment-form"
-                            >
-
-                                {% csrf_token %}
-
-                                <input
-                                    type="text"
-                                    name="content"
-                                    class="comment-input"
-                                    placeholder="Add your observation..."
-                                    maxlength="1000"
-                                    required
-                                >
-
-                                <button
-                                    type="submit"
-                                    class="comment-submit"
-                                >
-
-                                    Post
-
-                                </button>
-
-                            </form>
-
-                        </div>
-
-
-                    </article>
-
-
-                {% endfor %}
-
-
-            {% else %}
-
-
-                <div class="empty-state">
-
-                    <h2>
-                        No infrastructure reports yet
-                    </h2>
-
-                    <p>
-                        Be the first person to report an
-                        infrastructure issue in your area.
-                    </p>
-
-                    <a
-                        href="{% url 'create_report' %}"
-                        class="create-report"
-                    >
-
-                        Report an Issue
-
-                    </a>
+                    AI • Innovation • Impact
 
                 </div>
 
-
-            {% endif %}
+            </footer>
 
 
         </section>
 
+
     </main>
 
+
 </div>
+
+
+<script>
+
+
+    /* =========================================================
+       SIDEBAR TOGGLE
+    ========================================================= */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const overlay =
+            document.getElementById("sidebarOverlay");
+
+        sidebar.classList.toggle("open");
+
+        overlay.classList.toggle("active");
+
+    }
+
+
+    /* =========================================================
+       CLOSE SIDEBAR WHEN CLICKING A LINK ON MOBILE
+    ========================================================= */
+
+    document
+        .querySelectorAll(".sidebar .nav-item")
+        .forEach(function(item) {
+
+            item.addEventListener("click", function() {
+
+                if (window.innerWidth <= 800) {
+
+                    const sidebar =
+                        document.getElementById("sidebar");
+
+                    const overlay =
+                        document.getElementById("sidebarOverlay");
+
+                    sidebar.classList.remove("open");
+
+                    overlay.classList.remove("active");
+
+                }
+
+            });
+
+        });
+
+
+    /* =========================================================
+       LOCATION SEARCH
+    ========================================================= */
+
+    const search =
+        document.getElementById("locationSearch");
+
+
+    if (search) {
+
+        search.addEventListener(
+            "keypress",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    const location =
+                        search.value.trim();
+
+
+                    if (location) {
+
+                        alert(
+                            "Location search will be connected to the infrastructure map: "
+                            + location
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       ESCAPE KEY CLOSES MOBILE SIDEBAR
+    ========================================================= */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Escape" &&
+                window.innerWidth <= 800
+            ) {
+
+                const sidebar =
+                    document.getElementById("sidebar");
+
+                const overlay =
+                    document.getElementById("sidebarOverlay");
+
+                sidebar.classList.remove("open");
+
+                overlay.classList.remove("active");
+
+            }
+
+        }
+    );
+
+</script>
 
 
 </body>

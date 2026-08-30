@@ -149,32 +149,63 @@ def profile_view(request):
 
 
 @login_required
-def settings_view(request):
-    user = request.user
-    settings, _ = UserSettings.objects.get_or_create(user=user)
+@login_required
+def settings(request):
+
+    settings, created = UserSettings.objects.get_or_create(
+        user=request.user
+    )
+
+    profile, _ = Profile.objects.get_or_create(
+        user=request.user
+    )
 
     if request.method == "POST":
-        settings.risk_alerts = request.POST.get("risk_alerts") == "on"
-        settings.report_updates = request.POST.get("report_updates") == "on"
-        settings.system_notifications = request.POST.get("system_notifications") == "on"
-        settings.theme = request.POST.get("theme", "dark")
-        settings.language = request.POST.get("language", "English")
-        settings.default_map_view = request.POST.get("default_map_view", "standard")
+
+        settings.risk_alerts = (
+            "risk_alerts" in request.POST
+        )
+
+        settings.report_updates = (
+            "report_updates" in request.POST
+        )
+
+        settings.system_notifications = (
+            "system_notifications" in request.POST
+        )
+
+        settings.theme = request.POST.get(
+            "theme",
+            "dark"
+        )
+
+        settings.language = request.POST.get(
+            "language",
+            "English"
+        )
+
+        settings.default_map_view = request.POST.get(
+            "default_map_view",
+            "standard"
+        )
+
         settings.save()
 
-        messages.success(request, "Settings updated successfully.")
+        messages.success(
+            request,
+            "Settings updated successfully."
+        )
+
         return redirect("settings")
 
     return render(
         request,
         "settings.html",
         {
-            "user": user,
             "settings": settings,
-            "page_title": "Settings",
-        },
+            "profile": profile
+        }
     )
-
 
 # ==============================
 # LOGOUT

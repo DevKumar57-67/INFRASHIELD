@@ -1,590 +1,1149 @@
+{% load static %}
 
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+<title>Report Infrastructure | Infra Shield</title>
 
-    <title>Report Infrastructure | Infra Shield</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet">
 
 
-    <style>
+<style>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+    /* =========================================================
+       GLOBAL
+    ========================================================= */
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: 'Inter', sans-serif;
+        background: #050505;
+        color: #ffffff;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    button,
+    input,
+    textarea,
+    select {
+        font-family: inherit;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+
+    /* =========================================================
+       APP
+    ========================================================= */
+
+    .app {
+        display: flex;
+        min-height: 100vh;
+    }
+
+
+    /* =========================================================
+       SIDEBAR
+    ========================================================= */
+
+    .sidebar {
+        width: 250px;
+        background: #090909;
+        border-right: 1px solid #1c1c1c;
+
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+
+        display: flex;
+        flex-direction: column;
+
+        padding: 25px 15px;
+
+        z-index: 100;
+
+        transition: width 0.25s ease,
+                    transform 0.25s ease;
+    }
+
+
+    /* LOGO */
+
+    .logo {
+        padding: 5px 12px 30px;
+
+        font-size: 21px;
+        font-weight: 800;
+
+        letter-spacing: -1px;
+    }
+
+    .logo span {
+        color: #4da3ff;
+    }
+
+
+    /* SIDEBAR SECTION */
+
+    .sidebar-section {
+        margin-bottom: 25px;
+    }
+
+    .section-title {
+        font-size: 10px;
+        font-weight: 700;
+
+        letter-spacing: 1px;
+
+        color: #555;
+
+        padding: 0 12px;
+
+        margin-bottom: 10px;
+    }
+
+
+    /* NAV ITEM */
+
+    .nav-item {
+        display: flex;
+        align-items: center;
+
+        gap: 13px;
+
+        padding: 11px 12px;
+
+        margin-bottom: 3px;
+
+        border-radius: 9px;
+
+        color: #858585;
+
+        font-size: 13px;
+        font-weight: 500;
+
+        transition: 0.2s;
+    }
+
+    .nav-item:hover {
+        background: #141414;
+        color: white;
+    }
+
+    .nav-item.active {
+        background: #151515;
+        color: white;
+    }
+
+    .nav-icon {
+        width: 18px;
+        min-width: 18px;
+
+        text-align: center;
+
+        font-size: 14px;
+    }
+
+
+    /* SIDEBAR BOTTOM */
+
+    .sidebar-bottom {
+        margin-top: auto;
+    }
+
+
+    /* =========================================================
+       MAIN
+    ========================================================= */
+
+    .main {
+        margin-left: 250px;
+
+        width: calc(100% - 250px);
+
+        min-height: 100vh;
+
+        background: #050505;
+
+        transition: margin-left 0.25s ease,
+                    width 0.25s ease;
+    }
+
+
+    /* =========================================================
+       TOPBAR
+    ========================================================= */
+
+    .topbar {
+        height: 76px;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        padding: 0 32px;
+
+        border-bottom: 1px solid #1b1b1b;
+
+        background: rgba(5, 5, 5, 0.92);
+
+        position: sticky;
+        top: 0;
+
+        z-index: 50;
+
+        backdrop-filter: blur(10px);
+    }
+
+
+    /* MENU BUTTON */
+
+    .menu-btn {
+        display: none;
+
+        width: 35px;
+        height: 35px;
+
+        border: 1px solid #252525;
+
+        background: #101010;
+
+        color: white;
+
+        border-radius: 8px;
+
+        cursor: pointer;
+
+        align-items: center;
+        justify-content: center;
+
+        font-size: 17px;
+    }
+
+    .menu-btn:hover {
+        border-color: #444;
+    }
+
+
+    /* SEARCH */
+
+    .search-container {
+        width: 420px;
+
+        position: relative;
+    }
+
+    .search-icon {
+        position: absolute;
+
+        left: 14px;
+        top: 50%;
+
+        transform: translateY(-50%);
+
+        color: #555;
+
+        font-size: 14px;
+    }
+
+    .search-input {
+        width: 100%;
+
+        background: #101010;
+
+        border: 1px solid #242424;
+
+        border-radius: 9px;
+
+        padding: 12px 15px 12px 40px;
+
+        color: white;
+
+        outline: none;
+
+        font-size: 13px;
+
+        transition: 0.2s;
+    }
+
+    .search-input:focus {
+        border-color: #3a3a3a;
+    }
+
+    .search-input::placeholder {
+        color: #555;
+    }
+
+
+    /* TOP ACTIONS */
+
+    .top-actions {
+        display: flex;
+        align-items: center;
+
+        gap: 18px;
+    }
+
+    .top-icon {
+        width: 35px;
+        height: 35px;
+
+        border-radius: 8px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background: #101010;
+
+        border: 1px solid #222;
+
+        color: #777;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+    }
+
+    .top-icon:hover {
+        color: white;
+        border-color: #444;
+    }
+
+
+    /* PROFILE */
+
+    .profile {
+        display: flex;
+        align-items: center;
+
+        gap: 10px;
+
+        cursor: pointer;
+    }
+
+    .avatar {
+        width: 35px;
+        height: 35px;
+
+        border-radius: 50%;
+
+        background: #1c1c1c;
+
+        border: 1px solid #333;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        font-size: 12px;
+        font-weight: 700;
+
+        overflow: hidden;
+    }
+
+    .avatar img {
+        width: 100%;
+        height: 100%;
+
+        object-fit: cover;
+    }
+
+    .profile-info {
+        line-height: 1.3;
+    }
+
+    .profile-name {
+        font-size: 12px;
+        font-weight: 600;
+    }
+
+    .profile-role {
+        font-size: 10px;
+        color: #666;
+    }
+
+
+    /* =========================================================
+       CONTENT
+    ========================================================= */
+
+    .content {
+        padding: 35px 32px 0;
+    }
+
+
+    /* =========================================================
+       REPORT HEADER
+    ========================================================= */
+
+    .report-header {
+        max-width: 850px;
+
+        margin: 0 auto 30px;
+    }
+
+    .eyebrow {
+        color: #4da3ff;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        letter-spacing: 1px;
+
+        margin-bottom: 9px;
+    }
+
+    .report-header h1 {
+        font-size: 32px;
+
+        letter-spacing: -1.5px;
+
+        margin-bottom: 8px;
+    }
+
+    .intro {
+        color: #666;
+
+        font-size: 13px;
+
+        line-height: 1.6;
+
+        max-width: 700px;
+    }
+
+
+    /* =========================================================
+       FORM CARD
+    ========================================================= */
+
+    .form-card {
+        max-width: 850px;
+
+        margin: 0 auto 20px;
+
+        background: #0b0b0b;
+
+        border: 1px solid #202020;
+
+        border-radius: 14px;
+
+        padding: 30px;
+    }
+
+
+    /* =========================================================
+       FORM GROUP
+    ========================================================= */
+
+    .form-group {
+        margin-bottom: 24px;
+    }
+
+    label {
+        display: block;
+
+        font-size: 11px;
+
+        font-weight: 600;
+
+        margin-bottom: 9px;
+
+        color: #dddddd;
+    }
+
+    .required {
+        color: #4da3ff;
+    }
+
+
+    /* INPUTS */
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+
+        background: #111111;
+
+        border: 1px solid #292929;
+
+        color: #ffffff;
+
+        border-radius: 8px;
+
+        padding: 12px 13px;
+
+        font-size: 11px;
+
+        outline: none;
+
+        transition: 0.2s;
+    }
+
+    input:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #4da3ff;
+    }
+
+    textarea {
+        resize: vertical;
+
+        min-height: 120px;
+    }
+
+    select option {
+        background: #111111;
+        color: white;
+    }
+
+
+    /* =========================================================
+       IMAGE UPLOAD
+    ========================================================= */
+
+    .upload-box {
+        border: 1px dashed #333333;
+
+        border-radius: 10px;
+
+        padding: 25px;
+
+        text-align: center;
+
+        background: #090909;
+
+        transition: 0.2s;
+    }
+
+    .upload-box:hover {
+        border-color: #555555;
+    }
+
+    .upload-icon {
+        font-size: 28px;
+
+        margin-bottom: 10px;
+    }
+
+    .upload-text {
+        color: #aaa;
+
+        font-size: 11px;
+
+        margin-bottom: 5px;
+    }
+
+    .upload-help {
+        color: #555;
+
+        font-size: 9px;
+
+        margin-bottom: 15px;
+    }
+
+    .upload-box input {
+        background: transparent;
+
+        border: none;
+
+        padding: 0;
+    }
+
+
+    /* =========================================================
+       LOCATION
+    ========================================================= */
+
+    .location-grid {
+        display: grid;
+
+        grid-template-columns: 1fr 1fr;
+
+        gap: 15px;
+    }
+
+
+    /* =========================================================
+       HELP / ERRORS
+    ========================================================= */
+
+    .help {
+        color: #555;
+
+        font-size: 9px;
+
+        margin-top: 7px;
+
+        line-height: 1.5;
+    }
+
+    .error {
+        color: #e56b6b;
+
+        font-size: 10px;
+
+        margin-top: 6px;
+    }
+
+
+    /* =========================================================
+       SUBMIT
+    ========================================================= */
+
+    .submit-area {
+        margin-top: 30px;
+
+        padding-top: 25px;
+
+        border-top: 1px solid #1c1c1c;
+
+        display: flex;
+
+        justify-content: flex-end;
+    }
+
+    .submit-button {
+        background: #ffffff;
+
+        color: #000000;
+
+        border: none;
+
+        padding: 13px 24px;
+
+        border-radius: 8px;
+
+        font-size: 11px;
+
+        font-weight: 700;
+
+        cursor: pointer;
+
+        transition: 0.2s;
+    }
+
+    .submit-button:hover {
+        background: #dddddd;
+
+        transform: translateY(-1px);
+    }
+
+
+    /* =========================================================
+       INFORMATION BOX
+    ========================================================= */
+
+    .info-box {
+        max-width: 850px;
+
+        margin: 0 auto 35px;
+
+        background: #090909;
+
+        border: 1px solid #1c1c1c;
+
+        border-radius: 10px;
+
+        padding: 18px;
+    }
+
+    .info-title {
+        font-size: 11px;
+
+        font-weight: 700;
+
+        margin-bottom: 7px;
+    }
+
+    .info-text {
+        color: #555;
+
+        font-size: 9px;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================================================
+       TEAM BANNER
+    ========================================================= */
+
+    .team-banner {
+        max-width: 1150px;
+
+        margin: 0 auto;
+
+        padding: 0 30px 30px;
+    }
+
+    .team-banner-inner {
+        display: flex;
+
+        align-items: center;
+        justify-content: center;
+
+        gap: 10px;
+
+        padding: 14px 20px;
+
+        border: 1px solid #1e1e1e;
+
+        background: #0b0b0b;
+
+        border-radius: 10px;
+
+        text-align: center;
+
+        font-size: 10px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 1.5px;
+
+        color: #666;
+    }
+
+    .team-banner-inner strong {
+        color: #4da3ff;
+
+        font-weight: 800;
+    }
+
+
+    /* =========================================================
+       MOBILE SIDEBAR OVERLAY
+    ========================================================= */
+
+    .sidebar-overlay {
+        display: none;
+
+        position: fixed;
+
+        inset: 0;
+
+        background: rgba(0, 0, 0, 0.65);
+
+        z-index: 90;
+    }
+
+
+    /* =========================================================
+       RESPONSIVE
+    ========================================================= */
+
+    @media (max-width: 1100px) {
+
+        .search-container {
+            width: 300px;
         }
 
+    }
 
-        body {
 
-            font-family:
-                Arial,
-                Helvetica,
-                sans-serif;
+    @media (max-width: 800px) {
 
-            background: #050505;
-
-            color: #ffffff;
-
-            min-height: 100vh;
-
+        .sidebar {
+            transform: translateX(-100%);
         }
 
-
-        a {
-
-            text-decoration: none;
-
-            color: inherit;
-
+        .sidebar.open {
+            transform: translateX(0);
         }
 
-
-        /* ==========================
-           NAVBAR
-        ========================== */
-
-        .navbar {
-
-            height: 72px;
-
-            background: #090909;
-
-            border-bottom:
-                1px solid #1d1d1d;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: space-between;
-
-            padding: 0 40px;
-
+        .sidebar-overlay.active {
+            display: block;
         }
 
-
-        .logo {
-
-            font-size: 20px;
-
-            font-weight: 800;
-
-            letter-spacing: -1px;
-
-        }
-
-
-        .logo span {
-
-            color: #4da3ff;
-
-        }
-
-
-        .back {
-
-            color: #777;
-
-            font-size: 12px;
-
-        }
-
-
-        .back:hover {
-
-            color: #ffffff;
-
-        }
-
-
-        /* ==========================
-           CONTAINER
-        ========================== */
-
-        .container {
+        .main {
+            margin-left: 0;
 
             width: 100%;
-
-            max-width: 850px;
-
-            margin: auto;
-
-            padding: 45px 25px 80px;
-
         }
 
-
-        /* ==========================
-           HEADING
-        ========================== */
-
-        .eyebrow {
-
-            color: #4da3ff;
-
-            font-size: 10px;
-
-            font-weight: 700;
-
-            letter-spacing: 1.5px;
-
-            margin-bottom: 10px;
-
+        .menu-btn {
+            display: flex;
         }
 
+        .topbar {
+            padding: 0 18px;
 
-        h1 {
-
-            font-size: 31px;
-
-            letter-spacing: -1.5px;
-
-            margin-bottom: 8px;
-
+            gap: 12px;
         }
 
+        .search-container {
+            flex: 1;
 
-        .intro {
-
-            color: #666;
-
-            font-size: 13px;
-
-            line-height: 1.5;
-
-            margin-bottom: 35px;
-
+            width: auto;
         }
 
+        .profile-info {
+            display: none;
+        }
 
-        /* ==========================
-           FORM CARD
-        ========================== */
+        .content {
+            padding: 25px 18px 0;
+        }
 
         .form-card {
-
-            background: #0b0b0b;
-
-            border: 1px solid #202020;
-
-            border-radius: 14px;
-
-            padding: 30px;
-
-        }
-
-
-        /* ==========================
-           FORM GROUP
-        ========================== */
-
-        .form-group {
-
-            margin-bottom: 24px;
-
-        }
-
-
-        label {
-
-            display: block;
-
-            font-size: 11px;
-
-            font-weight: 600;
-
-            margin-bottom: 9px;
-
-            color: #dddddd;
-
-        }
-
-
-        .required {
-
-            color: #4da3ff;
-
-        }
-
-
-        input,
-        textarea,
-        select {
-
-            width: 100%;
-
-            background: #111111;
-
-            border: 1px solid #292929;
-
-            color: #ffffff;
-
-            border-radius: 8px;
-
-            padding: 12px 13px;
-
-            font-family: inherit;
-
-            font-size: 11px;
-
-            outline: none;
-
-            transition: 0.2s;
-
-        }
-
-
-        input:focus,
-        textarea:focus,
-        select:focus {
-
-            border-color: #4da3ff;
-
-        }
-
-
-        textarea {
-
-            resize: vertical;
-
-            min-height: 120px;
-
-        }
-
-
-        select option {
-
-            background: #111111;
-
-            color: #ffffff;
-
-        }
-
-
-        /* ==========================
-           IMAGE UPLOAD
-        ========================== */
-
-        .upload-box {
-
-            border: 1px dashed #333333;
-
-            border-radius: 10px;
-
             padding: 25px;
-
-            text-align: center;
-
-            background: #090909;
-
-            transition: 0.2s;
-
         }
 
+    }
 
-        .upload-box:hover {
 
-            border-color: #555555;
+    @media (max-width: 550px) {
 
+        .top-actions {
+            gap: 6px;
         }
 
-
-        .upload-icon {
-
-            font-size: 28px;
-
-            margin-bottom: 10px;
-
+        .top-icon {
+            display: none;
         }
 
-
-        .upload-text {
-
-            color: #aaa;
-
-            font-size: 11px;
-
-            margin-bottom: 5px;
-
+        .report-header h1 {
+            font-size: 26px;
         }
 
-
-        .upload-help {
-
-            color: #555;
-
-            font-size: 9px;
-
-            margin-bottom: 15px;
-
+        .form-card {
+            padding: 20px;
         }
-
-
-        .upload-box input {
-
-            background: transparent;
-
-            border: none;
-
-            padding: 0;
-
-        }
-
-
-        /* ==========================
-           LOCATION
-        ========================== */
 
         .location-grid {
-
-            display: grid;
-
-            grid-template-columns:
-                1fr 1fr;
-
-            gap: 15px;
-
+            grid-template-columns: 1fr;
         }
-
-
-        /* ==========================
-           HELP TEXT
-        ========================== */
-
-        .help {
-
-            color: #555;
-
-            font-size: 9px;
-
-            margin-top: 7px;
-
-            line-height: 1.5;
-
-        }
-
-
-        /* ==========================
-           ERRORS
-        ========================== */
-
-        .error {
-
-            color: #e56b6b;
-
-            font-size: 10px;
-
-            margin-top: 6px;
-
-        }
-
-
-        /* ==========================
-           SUBMIT
-        ========================== */
 
         .submit-area {
-
-            margin-top: 30px;
-
-            padding-top: 25px;
-
-            border-top: 1px solid #1c1c1c;
-
-            display: flex;
-
-            justify-content: flex-end;
-
+            justify-content: stretch;
         }
-
 
         .submit-button {
-
-            background: #ffffff;
-
-            color: #000000;
-
-            border: none;
-
-            padding: 13px 24px;
-
-            border-radius: 8px;
-
-            font-size: 11px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            transition: 0.2s;
-
+            width: 100%;
         }
 
-
-        .submit-button:hover {
-
-            background: #dddddd;
-
-            transform:
-                translateY(-1px);
-
+        .team-banner {
+            padding: 0 18px 22px;
         }
 
+        .team-banner-inner {
+            flex-direction: column;
 
-        /* ==========================
-           INFO
-        ========================== */
+            gap: 5px;
 
-        .info-box {
-
-            margin-top: 20px;
-
-            background: #090909;
-
-            border:
-                1px solid #1c1c1c;
-
-            border-radius: 10px;
-
-            padding: 18px;
-
+            line-height: 1.5;
         }
 
+    }
 
-        .info-title {
-
-            font-size: 11px;
-
-            font-weight: 700;
-
-            margin-bottom: 7px;
-
-        }
-
-
-        .info-text {
-
-            color: #555;
-
-            font-size: 9px;
-
-            line-height: 1.6;
-
-        }
-
-
-        /* ==========================
-           MOBILE
-        ========================== */
-
-        @media (max-width: 650px) {
-
-            .navbar {
-
-                padding: 0 18px;
-
-            }
-
-
-            .container {
-
-                padding:
-                    30px 15px 60px;
-
-            }
-
-
-            .form-card {
-
-                padding: 20px;
-
-            }
-
-
-            .location-grid {
-
-                grid-template-columns: 1fr;
-
-            }
-
-
-            h1 {
-
-                font-size: 27px;
-
-            }
-
-        }
-
-    </style>
+</style>
+```
 
 </head>
 
-
 <body>
 
+<div class="app">
 
-    <!-- NAVBAR -->
+```
+<!-- =========================================================
+     SIDEBAR
+========================================================== -->
 
-    <nav class="navbar">
+<aside class="sidebar" id="sidebar">
+
+    <div class="logo">
+        INFRA<span>SHIELD</span>
+    </div>
 
 
-        <div class="logo">
+    <div class="sidebar-section">
 
-            INFRA<span>SHIELD</span>
-
+        <div class="section-title">
+            OVERVIEW
         </div>
 
 
-        <a
-            href="{% url 'dashboard' %}"
-            class="back">
+        <a href="{% url 'dashboard' %}"
+           class="nav-item">
 
-            ← Dashboard
+            <span class="nav-icon">⌂</span>
+
+            Dashboard
 
         </a>
 
 
-    </nav>
+        <a href="{% url 'infrastructure_feed' %}"
+           class="nav-item">
+
+            <span class="nav-icon">◉</span>
+
+            Infrastructure Feed
+
+        </a>
 
 
+        <a href="{% url 'create_report' %}"
+           class="nav-item active">
 
-    <!-- MAIN -->
+            <span class="nav-icon">+</span>
 
-    <main class="container">
+            Report Issue
+
+        </a>
+
+    </div>
 
 
-        <div class="eyebrow">
+    <div class="sidebar-section">
 
-            INFRASTRUCTURE REPORT
+        <div class="section-title">
+            INTELLIGENCE
+        </div>
+
+
+        <a href="#"
+           class="nav-item">
+
+            <span class="nav-icon">✦</span>
+
+            AI Analysis
+
+        </a>
+
+
+        <a href="#"
+           class="nav-item">
+
+            <span class="nav-icon">▥</span>
+
+            Analytics
+
+        </a>
+
+
+        <a href="{% url 'my_reports' %}"
+           class="nav-item">
+
+            <span class="nav-icon">◷</span>
+
+            Report History
+
+        </a>
+
+    </div>
+
+
+    <div class="sidebar-section">
+
+        <div class="section-title">
+            ACCOUNT
+        </div>
+
+
+        <a href="{% url 'profile' %}"
+           class="nav-item">
+
+            <span class="nav-icon">♙</span>
+
+            Profile
+
+        </a>
+
+
+        <a href="{% url 'settings' %}"
+           class="nav-item">
+
+            <span class="nav-icon">⚙</span>
+
+            Settings
+
+        </a>
+
+    </div>
+
+
+    <div class="sidebar-bottom">
+
+        <a href="{% url 'logout' %}"
+           class="nav-item">
+
+            <span class="nav-icon">↪</span>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- MOBILE OVERLAY -->
+
+<div class="sidebar-overlay"
+     id="sidebarOverlay"
+     onclick="toggleSidebar()">
+</div>
+
+
+<!-- =========================================================
+     MAIN
+========================================================== -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         TOPBAR
+    ====================================================== -->
+
+    <header class="topbar">
+
+
+        <button
+            class="menu-btn"
+            onclick="toggleSidebar()">
+
+            ☰
+
+        </button>
+
+
+        <div class="search-container">
+
+            <span class="search-icon">
+                ⌕
+            </span>
+
+            <input
+                type="text"
+                class="search-input"
+                id="locationSearch"
+                placeholder="Search city, road, bridge or location..."
+            >
 
         </div>
 
 
-        <h1>
-
-            Report an Infrastructure Issue
-
-        </h1>
+        <div class="top-actions">
 
 
-        <p class="intro">
-
-            Help identify infrastructure risks by
-            submitting an issue with relevant
-            information and visual evidence.
-
-        </p>
+            <button class="top-icon">
+                ?
+            </button>
 
 
+            <button class="top-icon">
+                ♧
+            </button>
+
+
+            <a href="{% url 'profile' %}"
+               class="profile">
+
+                <div class="avatar">
+
+                    {% if request.user.profile.profile_picture %}
+
+                        <img
+                            src="{{ request.user.profile.profile_picture.url }}"
+                            alt="Profile">
+
+                    {% else %}
+
+                        {{ request.user.first_name|first|upper }}
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+
+                        {{ request.user.first_name }}
+
+                    </div>
+
+                    <div class="profile-role">
+
+                        {{ request.user.bio }}
+
+                    </div>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================================
+         CONTENT
+    ====================================================== -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="report-header">
+
+            <div class="eyebrow">
+
+                INFRASTRUCTURE REPORT
+
+            </div>
+
+
+            <h1>
+
+                Report an Infrastructure Issue
+
+            </h1>
+
+
+            <p class="intro">
+
+                Help identify infrastructure risks by
+                submitting an issue with relevant
+                information and visual evidence.
+
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             FORM
+        ================================================== -->
 
         <div class="form-card">
 
@@ -593,9 +1152,7 @@
                 method="POST"
                 enctype="multipart/form-data">
 
-
                 {% csrf_token %}
-
 
 
                 <!-- FORM ERRORS -->
@@ -611,7 +1168,6 @@
                 {% endif %}
 
 
-
                 <!-- INFRASTRUCTURE TYPE -->
 
                 <div class="form-group">
@@ -619,6 +1175,7 @@
                     <label>
 
                         Infrastructure Type
+
                         <span class="required">*</span>
 
                     </label>
@@ -640,7 +1197,6 @@
                 </div>
 
 
-
                 <!-- TITLE -->
 
                 <div class="form-group">
@@ -648,6 +1204,7 @@
                     <label>
 
                         Issue Title
+
                         <span class="required">*</span>
 
                     </label>
@@ -667,7 +1224,6 @@
                     {% endfor %}
 
                 </div>
-
 
 
                 <!-- DESCRIPTION -->
@@ -707,7 +1263,6 @@
                 </div>
 
 
-
                 <!-- IMAGE -->
 
                 <div class="form-group">
@@ -715,6 +1270,7 @@
                     <label>
 
                         Infrastructure Image
+
                         <span class="required">*</span>
 
                     </label>
@@ -722,13 +1278,9 @@
 
                     <div class="upload-box">
 
-
                         <div class="upload-icon">
-
                             📷
-
                         </div>
-
 
                         <div class="upload-text">
 
@@ -736,16 +1288,13 @@
 
                         </div>
 
-
                         <div class="upload-help">
 
                             JPG, JPEG, PNG or WEBP
 
                         </div>
 
-
                         {{ form.image }}
-
 
                     </div>
 
@@ -763,7 +1312,6 @@
                 </div>
 
 
-
                 <!-- LOCATION -->
 
                 <div class="form-group">
@@ -771,6 +1319,7 @@
                     <label>
 
                         Location
+
                         <span class="required">*</span>
 
                     </label>
@@ -801,7 +1350,6 @@
                 </div>
 
 
-
                 <!-- COORDINATES -->
 
                 <div class="form-group">
@@ -820,7 +1368,6 @@
 
                             {{ form.latitude }}
 
-
                             <div class="help">
 
                                 Latitude
@@ -833,7 +1380,6 @@
                         <div>
 
                             {{ form.longitude }}
-
 
                             <div class="help">
 
@@ -871,11 +1417,9 @@
                 </div>
 
 
-
                 <!-- SUBMIT -->
 
                 <div class="submit-area">
-
 
                     <button
                         type="submit"
@@ -885,7 +1429,6 @@
 
                     </button>
 
-
                 </div>
 
 
@@ -894,8 +1437,9 @@
         </div>
 
 
-
-        <!-- INFORMATION -->
+        <!-- =================================================
+             INFORMATION
+        ================================================== -->
 
         <div class="info-box">
 
@@ -918,14 +1462,134 @@
 
             </div>
 
+        </div>
+
+
+        <!-- =================================================
+             TEAM BANNER
+        ================================================== -->
+
+        <div class="team-banner">
+
+            <div class="team-banner-inner">
+
+                <span>
+                    Built with purpose for safer infrastructure
+                </span>
+
+                <span>·</span>
+
+                <strong>
+                    TEAM MINDSINQ
+                </strong>
+
+                <span>·</span>
+
+                <span>
+                    AI • Innovation • Impact
+                </span>
+
+            </div>
 
         </div>
 
 
-    </main>
+    </section>
 
+</main>
+```
+
+</div>
+
+<script>
+
+    /* =========================================================
+       SIDEBAR TOGGLE
+    ========================================================= */
+
+    function toggleSidebar() {
+
+        const sidebar =
+            document.getElementById("sidebar");
+
+        const overlay =
+            document.getElementById("sidebarOverlay");
+
+        sidebar.classList.toggle("open");
+
+        overlay.classList.toggle("active");
+
+    }
+
+
+    /* =========================================================
+       LOCATION SEARCH
+    ========================================================= */
+
+    const search =
+        document.getElementById("locationSearch");
+
+
+    if (search) {
+
+        search.addEventListener(
+            "keypress",
+            function(event) {
+
+                if (event.key === "Enter") {
+
+                    const location =
+                        search.value.trim();
+
+                    if (location) {
+
+                        alert(
+                            "Location search will be connected to the infrastructure map: "
+                            + location
+                        );
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       CLOSE SIDEBAR AFTER NAVIGATION
+       ON SMALL SCREENS
+    ========================================================= */
+
+    document
+        .querySelectorAll(".sidebar a")
+        .forEach(function(link) {
+
+            link.addEventListener(
+                "click",
+                function() {
+
+                    if (window.innerWidth <= 800) {
+
+                        document
+                            .getElementById("sidebar")
+                            .classList.remove("open");
+
+                        document
+                            .getElementById("sidebarOverlay")
+                            .classList.remove("active");
+
+                    }
+
+                }
+            );
+
+        });
+
+</script>
 
 </body>
 
 </html>
-

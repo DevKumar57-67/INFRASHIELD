@@ -4,23 +4,18 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Dashboard | Infra Shield</title>
 
-    <link rel="preconnect"
-          href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin>
-
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
 
     <style>
 
@@ -32,6 +27,10 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
@@ -83,10 +82,56 @@
             padding: 25px 15px;
 
             z-index: 100;
+
+            transition:
+                width 0.25s ease,
+                transform 0.25s ease;
         }
 
 
-        /* LOGO */
+        /* ==============================
+           COLLAPSED SIDEBAR
+        ============================== */
+
+        .sidebar.collapsed {
+            width: 76px;
+        }
+
+        .sidebar.collapsed .logo {
+            font-size: 0;
+            text-align: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .sidebar.collapsed .logo::after {
+            content: "IS";
+            font-size: 20px;
+            color: #4da3ff;
+            font-weight: 800;
+        }
+
+        .sidebar.collapsed .section-title {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 12px 0;
+        }
+
+        .sidebar.collapsed .nav-icon {
+            margin: 0;
+        }
+
+        .sidebar.collapsed .nav-text {
+            display: none;
+        }
+
+
+        /* ==============================
+           LOGO
+        ============================== */
 
         .logo {
             padding: 5px 12px 30px;
@@ -95,6 +140,10 @@
             font-weight: 800;
 
             letter-spacing: -1px;
+
+            white-space: nowrap;
+
+            transition: 0.25s;
         }
 
         .logo span {
@@ -102,7 +151,9 @@
         }
 
 
-        /* SIDEBAR SECTION */
+        /* ==============================
+           SIDEBAR SECTION
+        ============================== */
 
         .sidebar-section {
             margin-bottom: 25px;
@@ -122,7 +173,9 @@
         }
 
 
-        /* NAV ITEM */
+        /* ==============================
+           NAV ITEM
+        ============================== */
 
         .nav-item {
             display: flex;
@@ -142,6 +195,8 @@
             font-weight: 500;
 
             transition: 0.2s;
+
+            white-space: nowrap;
         }
 
         .nav-item:hover {
@@ -156,13 +211,17 @@
 
         .nav-icon {
             width: 18px;
+            min-width: 18px;
+
             text-align: center;
 
             font-size: 14px;
         }
 
 
-        /* SIDEBAR BOTTOM */
+        /* ==============================
+           SIDEBAR BOTTOM
+        ============================== */
 
         .sidebar-bottom {
             margin-top: auto;
@@ -181,6 +240,15 @@
             min-height: 100vh;
 
             background: #050505;
+
+            transition:
+                margin-left 0.25s ease,
+                width 0.25s ease;
+        }
+
+        .main.sidebar-collapsed {
+            margin-left: 76px;
+            width: calc(100% - 76px);
         }
 
 
@@ -193,7 +261,6 @@
 
             display: flex;
             align-items: center;
-
             justify-content: space-between;
 
             padding: 0 32px;
@@ -206,15 +273,59 @@
             top: 0;
 
             z-index: 50;
+
+            backdrop-filter: blur(10px);
         }
 
 
-        /* SEARCH */
+        /* ==============================
+           SIDEBAR TOGGLE
+        ============================== */
+
+        .menu-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid #252525;
+
+            background: #101010;
+
+            color: #aaa;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+
+            transition: 0.2s;
+
+            flex-shrink: 0;
+        }
+
+        .menu-btn:hover {
+            color: white;
+            border-color: #444;
+            background: #151515;
+        }
+
+
+        /* ==============================
+           SEARCH
+        ============================== */
 
         .search-container {
             width: 420px;
 
             position: relative;
+
+            margin-left: 15px;
+
+            margin-right: auto;
         }
 
         .search-icon {
@@ -259,7 +370,9 @@
         }
 
 
-        /* TOP RIGHT */
+        /* ==============================
+           TOP RIGHT
+        ============================== */
 
         .top-actions {
             display: flex;
@@ -295,7 +408,9 @@
         }
 
 
-        /* PROFILE */
+        /* ==============================
+           PROFILE
+        ============================== */
 
         .profile {
             display: flex;
@@ -304,6 +419,12 @@
             gap: 10px;
 
             cursor: pointer;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .avatar {
@@ -322,6 +443,21 @@
 
             font-size: 12px;
             font-weight: 700;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+        .avatar-placeholder {
+            color: #aaa;
         }
 
         .profile-info {
@@ -336,6 +472,12 @@
         .profile-role {
             font-size: 10px;
             color: #666;
+
+            max-width: 150px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
 
@@ -344,7 +486,7 @@
         ============================== */
 
         .content {
-            padding: 35px 32px 50px;
+            padding: 35px 32px 0;
         }
 
 
@@ -388,11 +530,12 @@
         }
 
 
-        /* DATE */
+        /* ==============================
+           DATE
+        ============================== */
 
         .date-box {
             color: #666;
-
             font-size: 12px;
         }
 
@@ -426,6 +569,7 @@
 
         .stat-card:hover {
             border-color: #333;
+
             transform: translateY(-2px);
         }
 
@@ -510,7 +654,6 @@
             display: flex;
 
             justify-content: space-between;
-
             align-items: center;
 
             padding: 18px 20px;
@@ -568,9 +711,6 @@
             overflow: hidden;
         }
 
-
-        /* MAP INDIA SHAPE PLACEHOLDER */
-
         .india-shape {
             position: absolute;
 
@@ -607,7 +747,9 @@
         }
 
 
-        /* MAP MARKERS */
+        /* ==============================
+           MAP MARKERS
+        ============================== */
 
         .marker {
             position: absolute;
@@ -675,7 +817,9 @@
         }
 
 
-        /* MARKER POSITIONS */
+        /* ==============================
+           MARKER POSITIONS
+        ============================== */
 
         .marker-1 {
             left: 51%;
@@ -703,7 +847,9 @@
         }
 
 
-        /* MAP LEGEND */
+        /* ==============================
+           MAP LEGEND
+        ============================== */
 
         .map-legend {
             position: absolute;
@@ -807,7 +953,9 @@
         }
 
 
-        /* RISK */
+        /* ==============================
+           RISK
+        ============================== */
 
         .risk-box {
             background: #101010;
@@ -825,7 +973,6 @@
             display: flex;
 
             justify-content: space-between;
-
             align-items: center;
 
             margin-bottom: 12px;
@@ -870,7 +1017,9 @@
         }
 
 
-        /* RECOMMENDATION */
+        /* ==============================
+           RECOMMENDATION
+        ============================== */
 
         .recommendation {
             border-left: 2px solid #4da3ff;
@@ -906,6 +1055,8 @@
                 1.6fr 1fr;
 
             gap: 20px;
+
+            padding-bottom: 25px;
         }
 
 
@@ -917,7 +1068,6 @@
             display: flex;
 
             align-items: center;
-
             justify-content: space-between;
 
             padding: 15px 20px;
@@ -1071,24 +1221,70 @@
 
 
         /* ==============================
-           MOBILE SIDEBAR BUTTON
+           FOOTER
         ============================== */
 
-        .menu-btn {
-            display: none;
+        .site-footer {
+            margin-top: 0;
 
-            width: 35px;
-            height: 35px;
+            padding: 28px 32px;
 
-            border: 1px solid #252525;
+            border-top: 1px solid #1b1b1b;
 
-            background: #101010;
+            background: #070707;
 
-            color: white;
+            display: flex;
 
-            border-radius: 8px;
+            align-items: center;
 
-            cursor: pointer;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            color: #777;
+        }
+
+        .footer-brand span {
+            color: #4da3ff;
+        }
+
+        .footer-team {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #666;
+
+            font-size: 11px;
+        }
+
+        .footer-team strong {
+            color: #ffffff;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+        .footer-divider {
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: #333;
         }
 
 
@@ -1118,26 +1314,48 @@
         @media (max-width: 800px) {
 
             .sidebar {
-                transform: translateX(-100%);
+                width: 250px;
 
-                transition: 0.25s;
+                transform: translateX(-100%);
             }
 
             .sidebar.open {
                 transform: translateX(0);
             }
 
-            .main {
+            .sidebar.collapsed {
+                width: 250px;
+            }
+
+            .sidebar.collapsed .logo {
+                font-size: 21px;
+                text-align: left;
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .sidebar.collapsed .logo::after {
+                display: none;
+            }
+
+            .sidebar.collapsed .section-title {
+                display: block;
+            }
+
+            .sidebar.collapsed .nav-item {
+                justify-content: flex-start;
+                padding: 11px 12px;
+            }
+
+            .sidebar.collapsed .nav-text {
+                display: inline;
+            }
+
+            .main,
+            .main.sidebar-collapsed {
                 margin-left: 0;
 
                 width: 100%;
-            }
-
-            .menu-btn {
-                display: flex;
-
-                align-items: center;
-                justify-content: center;
             }
 
             .topbar {
@@ -1150,6 +1368,8 @@
                 flex: 1;
 
                 width: auto;
+
+                margin-left: 0;
             }
 
             .profile-info {
@@ -1157,11 +1377,15 @@
             }
 
             .content {
-                padding: 25px 18px;
+                padding: 25px 18px 0;
             }
 
             .welcome {
                 align-items: flex-start;
+            }
+
+            .site-footer {
+                padding: 25px 18px;
             }
 
         }
@@ -1193,6 +1417,10 @@
                 height: 300px;
             }
 
+            .footer-team {
+                width: 100%;
+            }
+
         }
 
     </style>
@@ -1201,7 +1429,6 @@
 
 
 <body>
-
 
 <div class="app">
 
@@ -1229,7 +1456,9 @@
 
                 <span class="nav-icon">⌂</span>
 
-                Dashboard
+                <span class="nav-text">
+                    Dashboard
+                </span>
 
             </a>
 
@@ -1239,7 +1468,9 @@
 
                 <span class="nav-icon">◉</span>
 
-                Infrastructure Feed
+                <span class="nav-text">
+                    Infrastructure Feed
+                </span>
 
             </a>
 
@@ -1249,7 +1480,9 @@
 
                 <span class="nav-icon">+</span>
 
-                Report Issue
+                <span class="nav-text">
+                    Report Issue
+                </span>
 
             </a>
 
@@ -1268,27 +1501,33 @@
 
                 <span class="nav-icon">✦</span>
 
-                AI Analysis
+                <span class="nav-text">
+                    AI Analysis
+                </span>
 
             </a>
 
 
-            <a href="#"
+            <a href="{% url 'analytics' %}"
                class="nav-item">
 
                 <span class="nav-icon">▥</span>
 
-                Analytics
+                <span class="nav-text">
+                    Analytics
+                </span>
 
             </a>
 
 
-            <a href="#"
+            <a href="{% url 'my_reports' %}"
                class="nav-item">
 
                 <span class="nav-icon">◷</span>
 
-                Report History
+                <span class="nav-text">
+                    Report History
+                </span>
 
             </a>
 
@@ -1307,7 +1546,9 @@
 
                 <span class="nav-icon">♙</span>
 
-                Profile
+                <span class="nav-text">
+                    Profile
+                </span>
 
             </a>
 
@@ -1317,7 +1558,9 @@
 
                 <span class="nav-icon">⚙</span>
 
-                Settings
+                <span class="nav-text">
+                    Settings
+                </span>
 
             </a>
 
@@ -1331,7 +1574,9 @@
 
                 <span class="nav-icon">↪</span>
 
-                Logout
+                <span class="nav-text">
+                    Logout
+                </span>
 
             </a>
 
@@ -1345,7 +1590,7 @@
          MAIN
     ================================== -->
 
-    <main class="main">
+    <main class="main" id="main">
 
 
         <!-- TOPBAR -->
@@ -1355,7 +1600,8 @@
 
             <button
                 class="menu-btn"
-                onclick="toggleSidebar()">
+                onclick="toggleSidebar()"
+                aria-label="Toggle sidebar">
 
                 ☰
 
@@ -1391,31 +1637,53 @@
                 </button>
 
 
+                <!-- DYNAMIC PROFILE -->
+
                 <div class="profile">
 
-                    <div class="avatar">
-                        <a href = "{% url 'profile' %}"
+                    <a
+                        href="{% url 'profile' %}"
+                        class="profile-link"
+                    >
 
-                        {{ request.user.first_name|first|upper }}
+                        <div class="avatar">
 
-                    </div>
+                            {% if request.user.profile.profile_picture %}
 
+                                <img
+                                    src="{{ request.user.profile.profile_picture.url }}"
+                                    alt="{{ request.user.first_name }} profile picture"
+                                >
 
-                    <div class="profile-info">
+                            {% else %}
 
-                        <div class="profile-name">
+                                <span class="avatar-placeholder">
+                                    {{ request.user.first_name|first|upper }}
+                                </span>
 
-                            {{ request.user.first_name }}
+                            {% endif %}
 
                         </div>
 
-                        <div class="profile-role">
 
-                            {{ request.user.bio }}
+                        <div class="profile-info">
+
+                            <div class="profile-name">
+
+                                {{ request.user.first_name }}
+
+                            </div>
+
+
+                            <div class="profile-role">
+
+                                {{ request.user.bio }}
+
+                            </div>
 
                         </div>
 
-                    </div>
+                    </a>
 
                 </div>
 
@@ -1425,7 +1693,9 @@
 
 
 
-        <!-- CONTENT -->
+        <!-- =================================
+             CONTENT
+        ================================== -->
 
         <section class="content">
 
@@ -1440,14 +1710,20 @@
                         INFRASTRUCTURE INTELLIGENCE
                     </div>
 
+
                     <h1>
+
                         Good to see you,
                         {{ request.user.first_name }}.
+
                     </h1>
 
+
                     <p>
+
                         Monitor infrastructure health
                         and identify emerging risks.
+
                     </p>
 
                 </div>
@@ -1455,7 +1731,7 @@
 
                 <div class="date-box">
 
-                    Friday, 28 August 2026
+                    Sunday, 30 August 2026
 
                 </div>
 
@@ -1463,7 +1739,9 @@
 
 
 
-            <!-- STATISTICS -->
+            <!-- =================================
+                 STATISTICS
+            ================================== -->
 
             <div class="stats-grid">
 
@@ -1487,8 +1765,10 @@
                     </div>
 
                     <div class="stat-description">
+
                         <strong>+4.2%</strong>
                         from last month
+
                     </div>
 
                 </div>
@@ -1514,8 +1794,10 @@
                     </div>
 
                     <div class="stat-description">
+
                         <strong>4 critical</strong>
                         areas detected
+
                     </div>
 
                 </div>
@@ -1541,8 +1823,10 @@
                     </div>
 
                     <div class="stat-description">
+
                         <strong>+31</strong>
                         this week
+
                     </div>
 
                 </div>
@@ -1577,7 +1861,9 @@
 
 
 
-            <!-- MAP + AI -->
+            <!-- =================================
+                 MAP + AI
+            ================================== -->
 
             <div class="dashboard-grid">
 
@@ -1628,23 +1914,22 @@
                             <div class="legend-item">
 
                                 <span class="legend-dot safe"></span>
-
                                 Safe
 
                             </div>
 
+
                             <div class="legend-item">
 
                                 <span class="legend-dot warning"></span>
-
                                 Warning
 
                             </div>
 
+
                             <div class="legend-item">
 
                                 <span class="legend-dot danger"></span>
-
                                 Critical
 
                             </div>
@@ -1730,9 +2015,7 @@
                         <div class="recommendation">
 
                             <div class="recommendation-title">
-
                                 Recommended Action
-
                             </div>
 
                             <div class="recommendation-text">
@@ -1752,7 +2035,9 @@
 
 
 
-            <!-- BOTTOM -->
+            <!-- =================================
+                 BOTTOM
+            ================================== -->
 
             <div class="bottom-grid">
 
@@ -1783,7 +2068,6 @@
 
 
                     <div class="report">
-
 
                         <div class="report-left">
 
@@ -1933,7 +2217,10 @@
                     <div class="quick-actions">
 
 
-                        <div class="quick-action">
+                        <a
+                            href="{% url 'create_report' %}"
+                            class="quick-action"
+                        >
 
                             <div class="quick-action-icon">
                                 +
@@ -1951,7 +2238,7 @@
 
                             </div>
 
-                        </div>
+                        </a>
 
 
 
@@ -2004,26 +2291,98 @@
 
             </div>
 
-
         </section>
+
+        <div class="nav-avatar">
+
+    {% if profile.profile_picture %}
+
+        <img
+            src="{{ profile.profile_picture.url }}"
+            alt="Profile">
+
+    {% else %}
+
+        {{ user.first_name|first|upper }}
+
+    {% endif %}
+
+</div>
+
+
+
+        <!-- =================================
+             FOOTER
+        ================================== -->
+
+        <footer class="site-footer">
+
+            <div class="footer-brand">
+
+                INFRA<span>SHIELD</span>
+                &nbsp;—&nbsp;
+                Infrastructure Intelligence
+
+            </div>
+
+
+            <div class="footer-team">
+
+                <span>
+                    Built by
+                </span>
+
+                <span class="footer-divider"></span>
+
+                <strong>
+                    TEAM MINDSINQ
+                </strong>
+
+            </div>
+
+        </footer>
+
 
     </main>
 
 </div>
 
 
+
 <script>
 
     /* ============================
-       SIDEBAR
+       SIDEBAR TOGGLE
     ============================ */
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const main =
+        document.getElementById("main");
+
 
     function toggleSidebar() {
 
-        const sidebar =
-            document.getElementById("sidebar");
+        /*
+         * Desktop:
+         * Collapse sidebar completely.
+         *
+         * Mobile:
+         * Slide sidebar in/out.
+         */
 
-        sidebar.classList.toggle("open");
+        if (window.innerWidth <= 800) {
+
+            sidebar.classList.toggle("open");
+
+        } else {
+
+            sidebar.classList.toggle("collapsed");
+
+            main.classList.toggle("sidebar-collapsed");
+
+        }
 
     }
 
@@ -2058,6 +2417,31 @@
 
         }
     );
+
+
+    /* ============================
+       CLOSE MOBILE SIDEBAR
+       WHEN CLICKING A NAV ITEM
+    ============================ */
+
+    document
+        .querySelectorAll(".sidebar .nav-item")
+        .forEach(function(item) {
+
+            item.addEventListener(
+                "click",
+                function() {
+
+                    if (window.innerWidth <= 800) {
+
+                        sidebar.classList.remove("open");
+
+                    }
+
+                }
+            );
+
+        });
 
 </script>
 

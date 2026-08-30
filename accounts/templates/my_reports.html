@@ -1,3 +1,4 @@
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -10,7 +11,19 @@
 
     <title>My Reports | InfraShield</title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
     <style>
+
+        /* ==============================
+           GLOBAL (SIDEBAR / TOPBAR / FOOTER SHELL)
+        ============================== */
 
         * {
             box-sizing: border-box;
@@ -18,16 +31,646 @@
             padding: 0;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
+            font-family: 'Inter', sans-serif;
             background: #080808;
             color: white;
-            font-family: Arial, sans-serif;
-            padding: 40px;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
+
+        button,
+        input {
+            font-family: inherit;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+
+        /* ==============================
+           APP LAYOUT
+        ============================== */
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* ==============================
+           SIDEBAR
+        ============================== */
+
+        .sidebar {
+            width: 250px;
+            background: #090909;
+            border-right: 1px solid #1c1c1c;
+
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+
+            display: flex;
+            flex-direction: column;
+
+            padding: 25px 15px;
+
+            z-index: 100;
+
+            transition:
+                width 0.25s ease,
+                transform 0.25s ease;
+        }
+
+
+        /* ==============================
+           COLLAPSED SIDEBAR
+        ============================== */
+
+        .sidebar.collapsed {
+            width: 76px;
+        }
+
+        .sidebar.collapsed .logo {
+            font-size: 0;
+            text-align: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .sidebar.collapsed .logo::after {
+            content: "IS";
+            font-size: 20px;
+            color: #4da3ff;
+            font-weight: 800;
+        }
+
+        .sidebar.collapsed .section-title {
+            display: none;
+        }
+
+        .sidebar.collapsed .nav-item {
+            justify-content: center;
+            padding: 12px 0;
+        }
+
+        .sidebar.collapsed .nav-icon {
+            margin: 0;
+        }
+
+        .sidebar.collapsed .nav-text {
+            display: none;
+        }
+
+
+        /* ==============================
+           LOGO
+        ============================== */
+
+        .logo {
+            padding: 5px 12px 30px;
+
+            font-size: 21px;
+            font-weight: 800;
+
+            letter-spacing: -1px;
+
+            white-space: nowrap;
+
+            transition: 0.25s;
+        }
+
+        .logo span {
+            color: #4da3ff;
+        }
+
+
+        /* ==============================
+           SIDEBAR SECTION
+        ============================== */
+
+        .sidebar-section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 10px;
+            font-weight: 700;
+
+            letter-spacing: 1px;
+
+            color: #555;
+
+            padding: 0 12px;
+
+            margin-bottom: 10px;
+        }
+
+
+        /* ==============================
+           NAV ITEM
+        ============================== */
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 11px 12px;
+
+            margin-bottom: 3px;
+
+            border-radius: 9px;
+
+            color: #858585;
+
+            font-size: 13px;
+            font-weight: 500;
+
+            transition: 0.2s;
+
+            white-space: nowrap;
+        }
+
+        .nav-item:hover {
+            background: #141414;
+            color: white;
+        }
+
+        .nav-item.active {
+            background: #151515;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 18px;
+            min-width: 18px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+
+        /* ==============================
+           SIDEBAR BOTTOM
+        ============================== */
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+
+        /* ==============================
+           MAIN AREA
+        ============================== */
+
+        .main {
+            margin-left: 250px;
+
+            width: calc(100% - 250px);
+
+            min-height: 100vh;
+
+            background: #080808;
+
+            display: flex;
+            flex-direction: column;
+
+            transition:
+                margin-left 0.25s ease,
+                width 0.25s ease;
+        }
+
+        .main.sidebar-collapsed {
+            margin-left: 76px;
+            width: calc(100% - 76px);
+        }
+
+
+        /* ==============================
+           TOP NAVBAR
+        ============================== */
+
+        .topbar {
+            height: 76px;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 32px;
+
+            border-bottom: 1px solid #1b1b1b;
+
+            background: rgba(8, 8, 8, 0.92);
+
+            position: sticky;
+            top: 0;
+
+            z-index: 50;
+
+            backdrop-filter: blur(10px);
+        }
+
+
+        /* ==============================
+           SIDEBAR TOGGLE
+        ============================== */
+
+        .menu-btn {
+            width: 36px;
+            height: 36px;
+
+            border: 1px solid #252525;
+
+            background: #101010;
+
+            color: #aaa;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+
+            transition: 0.2s;
+
+            flex-shrink: 0;
+        }
+
+        .menu-btn:hover {
+            color: white;
+            border-color: #444;
+            background: #151515;
+        }
+
+
+        /* ==============================
+           SEARCH
+        ============================== */
+
+        .search-container {
+            width: 420px;
+
+            position: relative;
+
+            margin-left: 15px;
+
+            margin-right: auto;
+        }
+
+        .search-icon {
+            position: absolute;
+
+            left: 14px;
+            top: 50%;
+
+            transform: translateY(-50%);
+
+            color: #555;
+
+            font-size: 14px;
+        }
+
+        .search-input {
+            width: 100%;
+
+            background: #101010;
+
+            border: 1px solid #242424;
+
+            border-radius: 9px;
+
+            padding: 12px 15px 12px 40px;
+
+            color: white;
+
+            outline: none;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        .search-input:focus {
+            border-color: #3a3a3a;
+        }
+
+        .search-input::placeholder {
+            color: #555;
+        }
+
+
+        /* ==============================
+           TOP RIGHT
+        ============================== */
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+
+            gap: 18px;
+        }
+
+        .top-icon {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 8px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: #101010;
+
+            border: 1px solid #222;
+
+            color: #777;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .top-icon:hover {
+            color: white;
+            border-color: #444;
+        }
+
+
+        /* ==============================
+           PROFILE
+        ============================== */
+
+        .profile {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+        }
+
+        .profile-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 35px;
+            height: 35px;
+
+            border-radius: 50%;
+
+            background: #1c1c1c;
+
+            border: 1px solid #333;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 12px;
+            font-weight: 700;
+
+            overflow: hidden;
+
+            flex-shrink: 0;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+
+            object-fit: cover;
+        }
+
+        .avatar-placeholder {
+            color: #aaa;
+        }
+
+        .profile-info {
+            line-height: 1.3;
+        }
+
+        .profile-name {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .profile-role {
+            font-size: 10px;
+            color: #666;
+
+            max-width: 150px;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        /* ==============================
+           PAGE CONTENT WRAPPER
+        ============================== */
+
+        .content {
+            flex: 1;
+
+            padding: 40px 32px 0;
+        }
+
+
+        /* ==============================
+           FOOTER
+        ============================== */
+
+        .site-footer {
+            margin-top: 0;
+
+            padding: 28px 32px;
+
+            border-top: 1px solid #1b1b1b;
+
+            background: #070707;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            font-size: 12px;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+
+            color: #777;
+        }
+
+        .footer-brand span {
+            color: #4da3ff;
+        }
+
+        .footer-team {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #666;
+
+            font-size: 11px;
+        }
+
+        .footer-team strong {
+            color: #ffffff;
+
+            font-weight: 700;
+
+            letter-spacing: 0.5px;
+        }
+
+        .footer-divider {
+            width: 4px;
+            height: 4px;
+
+            border-radius: 50%;
+
+            background: #333;
+        }
+
+
+        /* ==============================
+           RESPONSIVE (SHELL)
+        ============================== */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+                width: 250px;
+
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .sidebar.collapsed {
+                width: 250px;
+            }
+
+            .sidebar.collapsed .logo {
+                font-size: 21px;
+                text-align: left;
+                padding-left: 12px;
+                padding-right: 12px;
+            }
+
+            .sidebar.collapsed .logo::after {
+                display: none;
+            }
+
+            .sidebar.collapsed .section-title {
+                display: block;
+            }
+
+            .sidebar.collapsed .nav-item {
+                justify-content: flex-start;
+                padding: 11px 12px;
+            }
+
+            .sidebar.collapsed .nav-text {
+                display: inline;
+            }
+
+            .main,
+            .main.sidebar-collapsed {
+                margin-left: 0;
+
+                width: 100%;
+            }
+
+            .topbar {
+                padding: 0 18px;
+
+                gap: 12px;
+            }
+
+            .search-container {
+                flex: 1;
+
+                width: auto;
+
+                margin-left: 0;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .content {
+                padding: 30px 18px 0;
+            }
+
+            .site-footer {
+                padding: 25px 18px;
+            }
+
+        }
+
+
+        @media (max-width: 550px) {
+
+            .top-actions {
+                gap: 6px;
+            }
+
+            .top-icon {
+                display: none;
+            }
+
+            .footer-team {
+                width: 100%;
+            }
+
+        }
+
+
+        /* ==============================
+           ORIGINAL PAGE STYLES
+           (untouched)
+        ============================== */
 
         .container {
             max-width: 900px;
             margin: auto;
+            padding-bottom: 40px;
         }
 
         h1 {
@@ -92,67 +735,475 @@
 
 <body>
 
-<div class="container">
-
-    <a href="{% url 'infrastructure_feed' %}" class="back">
-        ← Back to Feed
-    </a>
-
-    <h1>My Reports</h1>
-
-    <p class="subtitle">
-        Infrastructure issues you have reported.
-    </p>
+<div class="app">
 
 
-    {% if reports %}
+    <!-- =================================
+         SIDEBAR
+    ================================== -->
 
-        {% for report in reports %}
+    <aside class="sidebar" id="sidebar">
 
-            <div class="report">
+        <div class="logo">
+            INFRA<span>SHIELD</span>
+        </div>
 
-                <h2>
-                    {{ report.title }}
-                </h2>
 
-                <div class="location">
-                    📍 {{ report.location }}
-                </div>
+        <div class="sidebar-section">
 
-                {% if report.description %}
+            <div class="section-title">
+                OVERVIEW
+            </div>
 
-                    <div class="description">
-                        {{ report.description }}
-                    </div>
 
-                {% endif %}
+            <a href="{% url 'dashboard' %}"
+               class="nav-item">
 
-                <div class="risk">
-                    {{ report.get_risk_level_display }}
+                <span class="nav-icon">⌂</span>
+
+                <span class="nav-text">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a href="{% url 'infrastructure_feed' %}"
+               class="nav-item">
+
+                <span class="nav-icon">◉</span>
+
+                <span class="nav-text">
+                    Infrastructure Feed
+                </span>
+
+            </a>
+
+
+            <a href="{% url 'create_report' %}"
+               class="nav-item">
+
+                <span class="nav-icon">+</span>
+
+                <span class="nav-text">
+                    Report Issue
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="section-title">
+                INTELLIGENCE
+            </div>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">✦</span>
+
+                <span class="nav-text">
+                    AI Analysis
+                </span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item">
+
+                <span class="nav-icon">▥</span>
+
+                <span class="nav-text">
+                    Analytics
+                </span>
+
+            </a>
+
+
+            <a href="#"
+               class="nav-item active">
+
+                <span class="nav-icon">◷</span>
+
+                <span class="nav-text">
+                    Report History
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-section">
+
+            <div class="section-title">
+                ACCOUNT
+            </div>
+
+
+            <a href="{% url 'profile' %}"
+               class="nav-item">
+
+                <span class="nav-icon">♙</span>
+
+                <span class="nav-text">
+                    Profile
+                </span>
+
+            </a>
+
+
+            <a href="{% url 'settings' %}"
+               class="nav-item">
+
+                <span class="nav-icon">⚙</span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'logout' %}"
+               class="nav-item">
+
+                <span class="nav-icon">↪</span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =================================
+         MAIN
+    ================================== -->
+
+    <main class="main" id="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <button
+                class="menu-btn"
+                onclick="toggleSidebar()"
+                aria-label="Toggle sidebar">
+
+                ☰
+
+            </button>
+
+
+            <div class="search-container">
+
+                <span class="search-icon">
+                    ⌕
+                </span>
+
+                <input
+                    type="text"
+                    class="search-input"
+                    id="locationSearch"
+                    placeholder="Search city, road, bridge or location..."
+                >
+
+            </div>
+
+
+            <div class="top-actions">
+
+
+                <button class="top-icon">
+                    ?
+                </button>
+
+
+                <button class="top-icon">
+                    ♧
+                </button>
+
+
+                <!-- DYNAMIC PROFILE -->
+
+                <div class="profile">
+
+                    
+                        href="{% url 'profile' %}"
+                        class="profile-link"
+                    >
+
+                        <div class="avatar">
+
+                            {% if request.user.profile.profile_picture %}
+
+                                <img
+                                    src="{{ request.user.profile.profile_picture.url }}"
+                                    alt="{{ request.user.first_name }} profile picture"
+                                >
+
+                            {% else %}
+
+                                <span class="avatar-placeholder">
+                                    {{ request.user.first_name|first|upper }}
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <div class="profile-info">
+
+                            <div class="profile-name">
+
+                                {{ request.user.first_name }}
+
+                            </div>
+
+
+                            <div class="profile-role">
+
+                                {{ request.user.bio }}
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
                 </div>
 
             </div>
 
-        {% endfor %}
+        </header>
 
-    {% else %}
 
-        <div class="empty">
 
-            <h2>No reports yet</h2>
+        <!-- =================================
+             ORIGINAL PAGE CONTENT
+             (untouched)
+        ================================== -->
 
-            <p>
-                You haven't reported any infrastructure
-                issues yet.
-            </p>
+        <section class="content">
 
-        </div>
+            <div class="container">
 
-    {% endif %}
+                <a href="{% url 'infrastructure_feed' %}" class="back">
+                    ← Back to Feed
+                </a>
+
+                <h1>My Reports</h1>
+
+                <p class="subtitle">
+                    Infrastructure issues you have reported.
+                </p>
+
+
+                {% if reports %}
+
+                    {% for report in reports %}
+
+                        <div class="report">
+
+                            <h2>
+                                {{ report.title }}
+                            </h2>
+
+                            <div class="location">
+                                📍 {{ report.location }}
+                            </div>
+
+                            {% if report.description %}
+
+                                <div class="description">
+                                    {{ report.description }}
+                                </div>
+
+                            {% endif %}
+
+                            <div class="risk">
+                                {{ report.get_risk_level_display }}
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty">
+
+                        <h2>No reports yet</h2>
+
+                        <p>
+                            You haven't reported any infrastructure
+                            issues yet.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================
+             FOOTER
+        ================================== -->
+
+        <footer class="site-footer">
+
+            <div class="footer-brand">
+
+                INFRA<span>SHIELD</span>
+                &nbsp;—&nbsp;
+                Infrastructure Intelligence
+
+            </div>
+
+
+            <div class="footer-team">
+
+                <span>
+                    Built by
+                </span>
+
+                <span class="footer-divider"></span>
+
+                <strong>
+                    TEAM MINDSINQ
+                </strong>
+
+            </div>
+
+        </footer>
+
+
+    </main>
 
 </div>
+
+
+
+<script>
+
+    /* ============================
+       SIDEBAR TOGGLE
+    ============================ */
+
+    const sidebar =
+        document.getElementById("sidebar");
+
+    const main =
+        document.getElementById("main");
+
+
+    function toggleSidebar() {
+
+        /*
+         * Desktop:
+         * Collapse sidebar completely.
+         *
+         * Mobile:
+         * Slide sidebar in/out.
+         */
+
+        if (window.innerWidth <= 800) {
+
+            sidebar.classList.toggle("open");
+
+        } else {
+
+            sidebar.classList.toggle("collapsed");
+
+            main.classList.toggle("sidebar-collapsed");
+
+        }
+
+    }
+
+
+    /* ============================
+       LOCATION SEARCH
+    ============================ */
+
+    const search =
+        document.getElementById("locationSearch");
+
+
+    search.addEventListener(
+        "keypress",
+        function(event) {
+
+            if (event.key === "Enter") {
+
+                const location =
+                    search.value.trim();
+
+                if (location) {
+
+                    alert(
+                        "Location search will be connected to the infrastructure map: "
+                        + location
+                    );
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* ============================
+       CLOSE MOBILE SIDEBAR
+       WHEN CLICKING A NAV ITEM
+    ============================ */
+
+    document
+        .querySelectorAll(".sidebar .nav-item")
+        .forEach(function(item) {
+
+            item.addEventListener(
+                "click",
+                function() {
+
+                    if (window.innerWidth <= 800) {
+
+                        sidebar.classList.remove("open");
+
+                    }
+
+                }
+            );
+
+        });
+
+</script>
+
 
 </body>
 
 </html>
-

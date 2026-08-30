@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Infra Shield — Infrastructure Intelligence</title>
+    <title>InfraShield — AI-Powered Infrastructure Intelligence Platform</title>
 
     <style>
         * {
@@ -95,11 +95,11 @@
             min-height: calc(100vh - 80px);
             display: flex;
             align-items: center;
-            padding: 80px 30px;
+            padding: 70px 30px 45px;
         }
 
         .hero-content {
-            max-width: 850px;
+            max-width: 900px;
         }
 
         .eyebrow {
@@ -124,23 +124,32 @@
         }
 
         h1 {
-            font-size: clamp(55px, 8vw, 105px);
-            line-height: 0.92;
-            letter-spacing: -6px;
+            font-size: clamp(58px, 9vw, 115px);
+            line-height: 0.9;
+            letter-spacing: -7px;
             font-weight: 900;
-            margin-bottom: 32px;
+            margin-bottom: 24px;
         }
 
         h1 span {
             color: #4da3ff;
         }
 
+        .hero-subheading {
+            max-width: 780px;
+            color: #d7d7d7;
+            font-size: clamp(19px, 2.2vw, 25px);
+            line-height: 1.4;
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+
         .hero-description {
-            max-width: 680px;
-            color: #999;
-            font-size: 19px;
+            max-width: 720px;
+            color: #888;
+            font-size: 17px;
             line-height: 1.7;
-            margin-bottom: 40px;
+            margin-bottom: 35px;
         }
 
         .hero-description strong {
@@ -199,7 +208,7 @@
         .features {
             display: flex;
             gap: 35px;
-            margin-top: 75px;
+            margin-top: 60px;
             padding-top: 25px;
             border-top: 1px solid #1c1c1c;
             flex-wrap: wrap;
@@ -227,6 +236,36 @@
             line-height: 1.5;
         }
 
+        /* Team Banner */
+
+        .team-banner {
+            width: 100%;
+            max-width: 1150px;
+            margin: 0 auto;
+            padding: 0 30px 30px;
+        }
+
+        .team-banner-inner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 14px 20px;
+            border: 1px solid #1e1e1e;
+            background: #0b0b0b;
+            border-radius: 10px;
+            color: #777;
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        .team-banner-inner span {
+            color: #4da3ff;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
         @media (max-width: 700px) {
 
             nav {
@@ -238,19 +277,34 @@
             }
 
             .hero {
-                padding: 60px 22px;
+                padding: 55px 22px 35px;
             }
 
             h1 {
-                letter-spacing: -3px;
+                letter-spacing: -4px;
+                font-size: clamp(52px, 16vw, 82px);
+            }
+
+            .hero-subheading {
+                font-size: 18px;
             }
 
             .hero-description {
-                font-size: 16px;
+                font-size: 15px;
             }
 
             .features {
                 gap: 25px;
+                margin-top: 50px;
+            }
+
+            .team-banner {
+                padding: 0 22px 25px;
+            }
+
+            .team-banner-inner {
+                text-align: center;
+                flex-wrap: wrap;
             }
         }
     </style>
@@ -285,19 +339,22 @@
 
         <div class="eyebrow">
             <span class="status-dot"></span>
-            AI-POWERED INFRASTRUCTURE INTELLIGENCE
+            AI-POWERED INFRASTRUCTURE INTELLIGENCE PLATFORM
         </div>
 
         <h1>
-            Predict failure.<br>
-            <span>Prevent disaster.</span>
+            INFRA<span>SHIELD</span>
         </h1>
 
+        <p class="hero-subheading">
+            India's Intelligent Infrastructure Failure Prediction &amp; Prevention Platform
+        </p>
+
         <p class="hero-description">
-            <strong>Infra Shield</strong> is an intelligent infrastructure
-            evaluation and prevention platform designed to identify
-            potential infrastructure failures before they become
-            public safety disasters.
+            <strong>InfraShield</strong> uses artificial intelligence and
+            infrastructure intelligence to <strong>detect damage, assess risk,
+            predict potential failures, and enable preventive action</strong>
+            before infrastructure problems become major public safety threats.
         </p>
 
         <div class="actions">
@@ -310,7 +367,10 @@
                 Log In
             </a>
 
-            <a href="https://github.com/DevKumar57-67/INFRASHIELD" class="action-btn github-btn">
+            <a href="https://github.com/DevKumar57-67/INFRASHIELD"
+               class="action-btn github-btn"
+               target="_blank"
+               rel="noopener noreferrer">
                 GitHub ↗
             </a>
 
@@ -323,17 +383,17 @@
                 <div class="feature-number">01</div>
                 <h3>Detect</h3>
                 <p>
-                    Analyze infrastructure conditions using
-                    computer vision and AI.
+                    Use AI-powered computer vision to identify
+                    visible infrastructure damage and anomalies.
                 </p>
             </div>
 
             <div class="feature">
                 <div class="feature-number">02</div>
-                <h3>Predict</h3>
+                <h3>Assess</h3>
                 <p>
-                    Identify risk patterns and potential
-                    infrastructure failures.
+                    Evaluate infrastructure conditions and
+                    determine the severity and associated risk.
                 </p>
             </div>
 
@@ -341,8 +401,8 @@
                 <div class="feature-number">03</div>
                 <h3>Prevent</h3>
                 <p>
-                    Turn infrastructure intelligence into
-                    actionable preventive decisions.
+                    Transform infrastructure intelligence into
+                    early warnings and actionable preventive decisions.
                 </p>
             </div>
 
@@ -351,6 +411,18 @@
     </div>
 
 </main>
+
+
+<div class="team-banner">
+
+    <div class="team-banner-inner">
+        Built with purpose for safer infrastructure
+        <span>· TEAM MINDSINQ ·</span>
+        AI • Innovation • Impact
+    </div>
+
+</div>
+
 
 </body>
 </html>
