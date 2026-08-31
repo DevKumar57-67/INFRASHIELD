@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
-from django.urls import reverse
+from django.urls import resolve, reverse
 
 
 class AuthenticationFlowTests(TestCase):
@@ -55,5 +55,8 @@ class AuthenticationFlowTests(TestCase):
 		})
 
 		self.assertRedirects(response, reverse("login"))
+
+	def test_media_url_is_registered(self):
+		self.assertIsNotNone(resolve("/media/"))
 
 # Create your tests here.
